@@ -8,10 +8,10 @@
 		<version>3.2.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.SAE2</groupId>
+	<groupId>com.SAES4</groupId>
 	<artifactId>SAE2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>SAE2-app</name>
+	<name>SAE2</name>
 	<description>Developpement de Trello</description>
 	<properties>
 		<java.version>22</java.version>
@@ -23,11 +23,19 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+			<artifactId>spring-boot-starter-jersey</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-mysql</artifactId>
 		</dependency>
 
 		<dependency>
