@@ -1,10 +1,10 @@
-package com.SAE2.SAE2;
+package com.SAES4.SAE2;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Sae2AppApplicationTests {
+class Sae2ApplicationTests {
 
 	@Test
 	void contextLoads() {
