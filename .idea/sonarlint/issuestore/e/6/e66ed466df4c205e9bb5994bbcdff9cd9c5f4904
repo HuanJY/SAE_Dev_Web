@@ -1,0 +1,6 @@
+
+¡	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¿«å¸ıÿÿÿÿ8¯ö½Øó1J$e0e70266-325c-446b-ab48-171a7d9db323
+w
+java:S1128"/Remove this unused import 'jakarta.ws.rs.Path'.(·Ñé‚úÿÿÿÿ8Üö½Øó1J$96797470-b810-464a-be61-61e7d7e8ff45
+
+java:S1128"FRemove this unused import 'org.springframework.stereotype.Controller'.(øŠ—Öùÿÿÿÿ8áö½Øó1J$68989ceb-b220-46b9-b716-a435256b9111
