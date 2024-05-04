@@ -1,10 +1,1 @@
-/.idea/
-
-# FRONT-END
-/front-end/yarn.lock
-/front-end/.yarn/
-/front-end/node_modules/
-
-
-# BACK-END
 /target/
