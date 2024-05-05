@@ -1193,7 +1193,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     </collation>
     <schema id="288" parent="1" name="azutrello">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-05-04.12:35:44</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-05-05.12:22:58</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="289" parent="1" name="information_schema">

@@ -1,12 +1,12 @@
 package com.SAES4.SAE2.repositories;
 
-
 import com.SAES4.SAE2.models.list.ListAzu;
+import com.SAES4.SAE2.models.task.Task;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface ListRepositories extends CrudRepository<ListAzu, Integer> {
+public interface TaskRepositories extends CrudRepository<Task, Integer> {
 
-    List<ListAzu> findByIdBoard(Integer idBoard);
+    List<Task> findByIdList(Integer idList);
 }
