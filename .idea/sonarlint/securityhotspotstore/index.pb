@@ -23,3 +23,13 @@ S
 #.idea/sonarlint/issuestore/index.pb,9/f/9fe84ebb15faf917b7def6236dba604453cc61e0
 ]
 -.idea/sonarlint/securityhotspotstore/index.pb,8/8/88a9255124c95bdc913197c120a8d560edc59c8e
+m
+=src/main/java/com/SAES4/SAE2/controllers/BoardController.java,e/6/e66ed466df4c205e9bb5994bbcdff9cd9c5f4904
+p
+@src/main/java/com/SAES4/SAE2/repositories/BoardRepositories.java,e/6/e69c54075931afaa58a55f581ef46f5e24dd56b9
+d
+4src/main/java/com/SAES4/SAE2/models/board/Board.java,b/e/be7b94fe080bf0ce64ae7e93df1ae1135399f3a6
+a
+1src/main/java/com/SAES4/SAE2/Sae2Application.java,a/5/a5570d56d5b780892893d9c8bdd27de4d939d60e
+m
+=src/main/java/com/SAES4/SAE2/services/board/BoardService.java,a/4/a49f4d3491c648200852a37afb49a2dbcd4d29d4

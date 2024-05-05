@@ -1,6 +1,6 @@
 package com.SAES4.SAE2.repositories;
 
-import com.SAES4.SAE2.models.list.ListAzu;
+
 import com.SAES4.SAE2.models.task.Task;
 import org.springframework.data.repository.CrudRepository;
 
