@@ -16,8 +16,8 @@ public class ListService {
         this.listRepositories = listRepositories;
     }
 
-    public List<ListAzu> findallList(Integer idBoard){
+    public List<ListAzu> findallList(Integer idBoard) {
 
-        return(List<ListAzu>) listRepositories.findByIdBoard(idBoard);
+        return (List<ListAzu>) listRepositories.findByIdBoard(idBoard);
     }
 }
