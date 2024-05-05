@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api/board")
@@ -28,7 +27,7 @@ public class BoardController {
     }
 
     @GetMapping(path = "/{userID}")
-    public Optional<Board> findUserBoard(@PathVariable Integer userID) {
+    public List<Board> findUserBoard(@PathVariable Integer userID) {
         return boardService.findUserBoard(userID);
     }
 }
