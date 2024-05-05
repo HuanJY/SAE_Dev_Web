@@ -8,3 +8,8 @@
 
 # BACK-END
 /target/
+/bin
+.classpath
+.project
+/.settings
+front-end/package-lock.json
