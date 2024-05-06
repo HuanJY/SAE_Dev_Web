@@ -1,36 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { getColorForText } from '../components/ModeleCouleurs';
-
-interface ButtonData {
-    text: string;
-    image?: string;
-}
+import { getColorForText, modeleClassique, modeleSpeciale, colors } from '../components/Modele_BG';
 
 const ResponsiveModele: React.FC = () => {
-    const [modeleClassique] = useState<ButtonData[]>([
-        { text: 'black' }, { text: 'white' }, { text: 'blue' }, { text: 'green' }, { text: 'red' }, { text: 'yellow' },
-        { text: 'orange' }, { text: 'purple' }, { text: 'pink' }, { text: 'tan' }, { text: 'brown' }, { text: 'grey' }
-    ]);
+    const [selectedModel, setSelectedModel] = useState<string>('');
 
-    const [modeleSpeciale] = useState<ButtonData[]>([
-        { text: 'Osaka', image: "./Image/OsakaPlane.jpg" },
-        { text: 'Osaka', image: "./Image/OsakaMexico.jpg" },
-        { text: 'Osaka', image: "./Image/OsakaFishing.jpg" },
-        { text: 'Osaka', image: "./Image/OsakaCartoon.jpg" },
-        { text: 'Osaka', image: "./Image/OsakaSleep.jpg" },
-        { text: 'Chiyo', image: "./Image/ChiyoCry.jpg" },
-        { text: 'Kaorin', image: "./Image/KaorinBlush.jpg" }
-    ]);
+    useEffect(() => {
+        const storedModel = localStorage.getItem('selectedModel');
+        if (storedModel) {
+            setSelectedModel(storedModel);
+        }
+    }, []); // Seulement exécuté lors du montage initial
+
+    const handleModelChange = (model: string) => {
+        setSelectedModel(model === selectedModel ? '' : model); // Réinitialiser si c'est déjà sélectionné
+        localStorage.setItem('selectedModel', model === selectedModel ? '' : model);
+    };
+
+    const getBackground = (model: string) => {
+        const selectedButton = modeleSpeciale.find(button => button.text === model);
+        return selectedButton ? `url(${selectedButton.image})` : colors[model] || colors.white;
+    };
 
     return (
-        <div className="right-side">
-
+        <div className="right-side" style={{ background: selectedModel ? getBackground(selectedModel) : '' }}>
             <h3>Modèles classiques</h3>
             <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
                 {modeleClassique.map((button, index) => (
-                    <Button key={index} sx={{
+                    <Button key={index} onClick={() => handleModelChange(button.text)} sx={{
                         color: getColorForText(button.text), backgroundColor: getColorForText(button.text),
                         fontFamily: 'monospace', display: 'block', textTransform: 'none', width: 'calc(20% - 3% - 1px)',
                         border: 'solid black', borderRadius: '20px', height: '90px', marginBottom: '3%',
@@ -44,7 +42,7 @@ const ResponsiveModele: React.FC = () => {
             <h3>Modèles Spéciales</h3>
             <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
                 {modeleSpeciale.map((button, index) => (
-                    <Button key={index} sx={{
+                    <Button key={index} onClick={() => handleModelChange(button.text)} sx={{
                         color: 'black', backgroundColor: 'white', fontFamily: 'monospace', display: 'block', textTransform: 'none', width: 'calc(20% - 3% - 1px)',
                         border: 'solid black', borderRadius: '20px', height: '90px', marginBottom: '3%',
                         marginRight: index % 5 === 4 ? '0' : '3%', position: 'relative', overflow: 'hidden'
