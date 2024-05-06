@@ -2,18 +2,21 @@
   font-family: monospace;
 }
 
+body {
+  background-color: white;
+}
+
 .left-side {
-  margin-left: 1%;
-  width: 15%;
-  height: 2000px;
+  width: 20%;
+  height: 900px;
   float: left;
+  border-left: solid black;
   background-color: bisque;
 }
 
 .right-side {
-  margin-right: 1%;
-  width: 82%;
-  height: 2000px;
+  width: 80%;
+  height: 900px;
   float: right;
   background-color: bisque;
   }
@@ -21,8 +24,9 @@
 .left-side, .right-side {
   box-sizing: border-box;
   padding: 20px;
-  border-left: solid black 2px;
-  border-right: solid black 2px;
+  border-bottom: solid black;
+  border-right: solid black;
+
 }
 
 hr {
