@@ -2,17 +2,16 @@ package com.SAES4.SAE2.controllers;
 
 import com.SAES4.SAE2.models.board.Board;
 import com.SAES4.SAE2.services.board.BoardService;
-import jakarta.ws.rs.Path;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/board")
+@RequestMapping(path = "/api/board")
 public class BoardController {
 
     private final BoardService boardService;
@@ -25,5 +24,10 @@ public class BoardController {
     @GetMapping
     public List<Board> findAllBoards() {
         return boardService.findAllBoards();
+    }
+
+    @GetMapping(path = "/{userID}")
+    public List<Board> findUserBoard(@PathVariable Integer userID) {
+        return boardService.findUserBoard(userID);
     }
 }
