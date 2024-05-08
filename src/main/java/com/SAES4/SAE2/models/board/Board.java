@@ -10,11 +10,13 @@ import lombok.Setter;
 @Table(name = "Board")
 public class Board {
     @Id
-    @Column(name = "id_board")
+    @Column(name = "idBoard")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idBoard;
-    @Column(name = "board_name")
+
+    @Column(name = "boardName")
     private String boardName;
-    @Column(name = "id_user")
+
+    @Column(name = "idUser")
     private Integer idUser;
 }
