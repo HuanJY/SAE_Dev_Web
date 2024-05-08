@@ -13,10 +13,10 @@ public class Board {
     @Column(name = "idBoard")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idBoard;
-    
+
     @Column(name = "boardName")
     private String boardName;
-    
+
     @Column(name = "idUser")
     private Integer idUser;
 }
