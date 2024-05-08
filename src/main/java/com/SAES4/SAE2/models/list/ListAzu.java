@@ -10,12 +10,12 @@ import lombok.Setter;
 @Table(name = "Lists")
 public class ListAzu {
     @Id
-    @Column(name = "id_list")
+    @Column(name = "idList")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idList;
-    @Column(name = "list_name")
+    @Column(name = "listName")
     private String boardName;
-    @Column(name = "id_board")
+    @Column(name = "idBoard")
     private Integer idBoard;
 }
 

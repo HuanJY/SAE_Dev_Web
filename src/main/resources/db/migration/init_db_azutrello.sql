@@ -1,9 +1,9 @@
 CREATE TABLE UserLogin(
-                           idUser INT AUTO_INCREMENT,
-                           loginName VARCHAR(20)  NOT NULL,
-                           passwordHash VARCHAR(250)  NOT NULL,
-                           PRIMARY KEY(idUser),
-                           UNIQUE(loginName)
+                          idUser INT AUTO_INCREMENT,
+                          loginName VARCHAR(20)  NOT NULL,
+                          passwordHash VARCHAR(250)  NOT NULL,
+                          PRIMARY KEY(idUser),
+                          UNIQUE(loginName)
 );
 
 CREATE TABLE Board(
@@ -32,9 +32,9 @@ CREATE TABLE Tasks(
 );
 
 CREATE TABLE TableauxPartagés(
-                                  idBoard INT,
-                                  idUser INT,
-                                  PRIMARY KEY(idBoard, idUser),
-                                  FOREIGN KEY(idBoard) REFERENCES Board(idBoard),
-                                  FOREIGN KEY(idUser) REFERENCES UserLogin(idUser)
+                                 idBoard INT,
+                                 idUser INT,
+                                 PRIMARY KEY(idBoard, idUser),
+                                 FOREIGN KEY(idBoard) REFERENCES Board(idBoard),
+                                 FOREIGN KEY(idUser) REFERENCES UserLogin(idUser)
 );

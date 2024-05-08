@@ -10,14 +10,14 @@ import lombok.Setter;
 @Table(name = "Tasks")
 public class Task {
     @Id
-    @Column(name = "id_task")
+    @Column(name = "idTask")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idTask;
-    @Column(name = "task_name")
+    @Column(name = "taskName")
     private String taskName;
-    @Column(name = "task_description")
+    @Column(name = "taskDescription")
     private String taskDesciption;
-    @Column(name = "id_list")
+    @Column(name = "idList")
     private Integer idList;
 
 }
