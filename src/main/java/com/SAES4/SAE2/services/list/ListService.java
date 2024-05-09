@@ -20,4 +20,15 @@ public class ListService {
 
         return (List<ListAzu>) listRepositories.findByIdBoard(idBoard);
     }
+
+    public void addList(ListAzu newList) {
+
+        ListAzu listInsert = new ListAzu();
+        listInsert.setIdList(newList.getIdList());
+        listInsert.setIdBoard(newList.getIdBoard());
+        listInsert.setListName(newList.getListName());
+
+        listRepositories.save(listInsert);
+
+    }
 }

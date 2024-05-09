@@ -14,7 +14,7 @@ public class ListAzu {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idList;
     @Column(name = "listName")
-    private String boardName;
+    private String listName;
     @Column(name = "idBoard")
     private Integer idBoard;
 }
