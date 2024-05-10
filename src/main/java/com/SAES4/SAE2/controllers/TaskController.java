@@ -1,5 +1,6 @@
 package com.SAES4.SAE2.controllers;
 
+import com.SAES4.SAE2.dto.EditTaskRequest;
 import com.SAES4.SAE2.models.task.Task;
 import com.SAES4.SAE2.services.task.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,9 @@ public class TaskController {
     @GetMapping(path = "/dropAllTaskByIdList/{idList}")
     public void dropAllTaskByIdList(@PathVariable int idList){
         taskService.dropAllTaskByIdList(idList);
+    }
+    @PostMapping(path = "{taskId}/modifiedTask")
+    public void  modifyTask(@PathVariable int taskId, @RequestBody EditTaskRequest editTaskRequest){
+        taskService.modifyTask(taskId, editTaskRequest);
     }
 }
