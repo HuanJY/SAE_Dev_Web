@@ -32,6 +32,7 @@ public class BoardController {
     public void addUserBoard(@RequestBody Board newBoard) {
         boardService.addUserBoard(newBoard);
     }
+
     @GetMapping(path = "/dropBoard/{idBoard}")
     public void dropBoard(@PathVariable int idBoard){
         boardService.dropBoard(idBoard);
