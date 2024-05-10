@@ -21,11 +21,20 @@ public class TaskController {
 
     @GetMapping(path = "/{idList}")
     public List<Task> findAllTaskList(@PathVariable Integer idList) {
-
         return taskService.findallTaskFromList(idList);
     }
 
-    public void addRTask(@RequestBody Task newTask){
-        taskService.addtask(newTask);
+    @PostMapping(path = "/addTask")
+    public void addTask(@RequestBody Task newTask) {
+        taskService.addTask(newTask);
+    }
+
+    @GetMapping(path = "/dropTask/{idTask}")
+    public void dropTask(@PathVariable int idTask) {
+        taskService.dropTask(idTask);
+    }
+    @GetMapping(path = "/dropAllTaskByIdList/{idList}")
+    public void dropAllTaskByIdList(@PathVariable int idList){
+        taskService.dropAllTaskByIdList(idList);
     }
 }

@@ -28,10 +28,12 @@ public class BoardController {
         return boardService.findUserBoard(userID);
     }
 
-    @GetMapping(path = "/addBoard")
+    @PostMapping(path = "/addBoard")
     public void addUserBoard(@RequestBody Board newBoard) {
-        System.out.println("AAAAAAAAAAAAAAAA" + newBoard);
         boardService.addUserBoard(newBoard);
-
+    }
+    @GetMapping(path = "/dropBoard/{idBoard}")
+    public void dropBoard(@PathVariable int idBoard){
+        boardService.dropBoard(idBoard);
     }
 }

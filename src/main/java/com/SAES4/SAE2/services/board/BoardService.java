@@ -32,15 +32,15 @@ public class BoardService {
     }
 
     public void addUserBoard(Board newBoard) {
-
         Board boardInsert = new Board();
 
         boardInsert.setIdUser(newBoard.getIdUser());
         boardInsert.setBoardName(newBoard.getBoardName());
 
         boardRepositories.save(boardInsert);
-
-
+    }
+    public void dropBoard(int idBoard){
+        boardRepositories.deleteById(idBoard);
     }
 }
 

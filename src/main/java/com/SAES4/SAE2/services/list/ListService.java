@@ -31,4 +31,11 @@ public class ListService {
         listRepositories.save(listInsert);
 
     }
+
+    public void dropList(int idList) {
+        listRepositories.deleteById(idList);
+    }
+    public void dropAllListByIdBoard(int idBoard){
+        listRepositories.deleteAll(this.findallList(idBoard));
+    }
 }

@@ -21,11 +21,20 @@ public class ListController {
 
     @GetMapping(path = "/{idBoard}")
     public List<ListAzu> findBoardList(@PathVariable Integer idBoard) {
-
         return listService.findallList(idBoard);
     }
-    @GetMapping(path = "/addList")
+
+    @PostMapping(path = "/addList")
     public void addList(@RequestBody ListAzu newList) {
         listService.addList(newList);
+    }
+
+    @GetMapping(path = "/dropList/{idList}")
+    public void dropList(@PathVariable int idList) {
+        listService.dropList(idList);
+    }
+    @GetMapping(path= "/dropAllListByIdBoard/{idBoard}")
+    public void dropAllListByIdBoard(@PathVariable int idBoard){
+        listService.dropAllListByIdBoard(idBoard);
     }
 }
