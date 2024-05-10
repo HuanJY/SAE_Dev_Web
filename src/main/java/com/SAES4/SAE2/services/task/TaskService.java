@@ -23,7 +23,7 @@ public class TaskService {
         return taskRepositories.findByIdList(idList);
     }
 
-    public void addtask(Task newTask) {
+    public void addTask(Task newTask) {
 
         Task taskInsert = new Task();
         taskInsert.setIdList(newTask.getIdList());
@@ -33,5 +33,13 @@ public class TaskService {
 
         taskRepositories.save(taskInsert);
 
+    }
+
+    public void dropTask(int idTask) {
+        taskRepositories.deleteById(idTask);
+    }
+
+    public void dropAllTaskByIdList(int idList) {
+        taskRepositories.deleteAll(this.findallTaskFromList(idList));
     }
 }
