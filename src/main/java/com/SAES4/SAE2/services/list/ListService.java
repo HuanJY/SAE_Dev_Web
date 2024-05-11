@@ -1,9 +1,14 @@
 package com.SAES4.SAE2.services.list;
 
+import com.SAES4.SAE2.dto.EditListRequest;
 import com.SAES4.SAE2.models.list.ListAzu;
+import com.SAES4.SAE2.models.task.Task;
 import com.SAES4.SAE2.repositories.ListRepositories;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,5 +42,15 @@ public class ListService {
     }
     public void dropAllListByIdBoard(int idBoard){
         listRepositories.deleteAll(this.findallList(idBoard));
+    }
+    public void modifyList(int idList, EditListRequest editListRequest){
+        ListAzu list = listRepositories.findById(idList)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        MessageFormat.format("List with id: {0} not found", idList)
+                ));
+        list.setListName(editListRequest.listName());
+        listRepositories.save(list);
+
     }
 }

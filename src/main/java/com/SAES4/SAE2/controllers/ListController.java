@@ -1,6 +1,7 @@
 package com.SAES4.SAE2.controllers;
 
 
+import com.SAES4.SAE2.dto.EditListRequest;
 import com.SAES4.SAE2.models.list.ListAzu;
 import com.SAES4.SAE2.services.list.ListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,9 @@ public class ListController {
     @GetMapping(path= "/dropAllListByIdBoard/{idBoard}")
     public void dropAllListByIdBoard(@PathVariable int idBoard){
         listService.dropAllListByIdBoard(idBoard);
+    }
+    @PostMapping(path = "{idList}/modifyList")
+    public void modifyList(@PathVariable int idList, @RequestBody EditListRequest editListRequest){
+        listService.modifyList(idList, editListRequest);
     }
 }
