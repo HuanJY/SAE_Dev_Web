@@ -30,15 +30,15 @@ public class TaskController {
         taskService.addTask(newTask);
     }
 
-    @GetMapping(path = "/dropTask/{idTask}")
+    @GetMapping(path = "/{idTask}/dropTask")
     public void dropTask(@PathVariable int idTask) {
         taskService.dropTask(idTask);
     }
-    @GetMapping(path = "/dropAllTaskByIdList/{idList}")
+    @GetMapping(path = "/{idList}/dropAllTaskByIdList")
     public void dropAllTaskByIdList(@PathVariable int idList){
         taskService.dropAllTaskByIdList(idList);
     }
-    @PostMapping(path = "{taskId}/modifiedTask")
+    @PostMapping(path = "/{taskId}/modifyTask")
     public void  modifyTask(@PathVariable int taskId, @RequestBody EditTaskRequest editTaskRequest){
         taskService.modifyTask(taskId, editTaskRequest);
     }
