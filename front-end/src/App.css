@@ -2,18 +2,61 @@
   font-family: monospace;
 }
 
+p {
+  font-family: monospace;
+}
+
+h3 {
+  font-family: monospace;
+}
+
+button {
+  background-color: grey;
+  color: white;
+  border: solid black;
+  border-radius: 20px;
+  font-family: monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+textarea {
+  background-color: white;
+  color: black;
+  border: solid black;
+  resize: none;
+}
+
+button:hover {
+  border-color: #646cff;
+}
+
+/* Contour des textes */
+
+.outline {
+  color: white;
+  background-color: grey;
+  border: solid black;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+
 .left-side {
-  margin-left: 1%;
-  width: 15%;
-  height: 2000px;
+  width: 20%;
+  height: 900px;
   float: left;
+  border-left: solid black;
   background-color: bisque;
 }
 
 .right-side {
-  margin-right: 1%;
-  width: 82%;
-  height: 2000px;
+  width: 80%;
+  height: 900px;
   float: right;
   background-color: bisque;
   }
@@ -21,15 +64,185 @@
 .left-side, .right-side {
   box-sizing: border-box;
   padding: 20px;
-  border-left: solid black 2px;
-  border-right: solid black 2px;
+  border-bottom: solid black;
+  border-right: solid black;
+
 }
 
 hr {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  border: solid black 1px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
-.image-container:hover .image-hover {
-  opacity: 0;
+.menu_option {
+  border: solid black;
+  border-radius: 20px;
+  margin-top: 2%;
+  justify-content: center;
+}
+
+/* Class pour le MenuPrincipale */
+
+.buttonBoard {
+  width: calc(33% - 2% - 1px);
+  height: 300px;
+}
+
+/* Class pour les Bar */
+
+.buttonBar {
+  width: 100%;
+  height: 90px;
+  margin-bottom: 4%;
+  font-size: large;
+}
+/* Class pour Modele */
+
+.outlineModeleType {
+  width: 80%;
+  height: 85px;
+  border: solid black;
+  border-radius: 20px;
+  margin-top: 41px;
+  margin-left: 10%;
+  margin-bottom: 5%;
+}
+
+.modeleType {
+  width: 20%;
+  margin-left: 0%;
+  margin-left: 2%;
+  margin-right: 2%;
+  background-color: white;
+  color: black;
+}
+
+.modeleSelect {
+  width: calc(20% - 3% - 1px);
+  height: 90px;
+  margin-bottom: 3%;
+  background-color: white;
+}
+
+/* Class pour ToDoList */
+
+.toDoListForm {
+  width: 400px;
+  height: 100%;
+  border: solid black;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-right: 20px; 
+}
+
+.headerToDoList ,.footerToDoList{
+  background-color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3%; 
+}
+
+.headerToDoList {
+  border-bottom: solid black;
+}
+
+.footerToDoList {
+  border-top: solid black;
+}
+
+.iconParametre {
+  width: 17%;
+  padding : 2%;
+}
+
+.taskForm {
+  width: 100%;
+  height: auto;
+  padding: 5%;
+}
+
+/* Class pour ListMenu */
+
+.buttonMenu {
+  width: 90%;
+  height: 40px;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 2%;
+}
+
+.sepButton {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+/* Class pour TaskParametre */
+
+.outlineLeftTaskParametre {
+  width: 70%;
+  height: 100%;
+  float: left;
+}
+
+.titleTask {
+  width: calc(99% - 3px);
+  height: 4%;
+  border-radius: 20px;
+  text-align: center;
+  display: flex;
+  font-size: large;
+}
+
+.descriptionTask {
+  width: calc(99% - 3px);
+  height: 30%;
+}
+
+.textLeftTaskParametre {
+  width: calc(100% - 3px);
+  height: 7%;
+  border-radius: 20px;
+  margin-bottom: 2%;
+}
+
+.buttonLeftTaskParametre {
+  width: 49%;
+  height : 7%;
+  margin-top: 2% ;
+  margin-bottom: calc(9% - 1px);
+}
+
+.buttonApplyTaskParametre{
+  width: 100%;
+  height: 7%;
+  margin-bottom: calc(2% - 2px);
+}
+
+.buttonCancelTaskParametre{
+  width: 100%;
+  height: 7%;
+}
+
+.outlineRightTaskParametre {
+  width: 25%;
+  height: 100%;
+  text-align: center;
+  border: solid black;
+  border-radius: 20px;
+  float: right;
+}
+
+.outlineRightTaskParametre > hr {
+  margin: 10%;
+}
+
+.buttonRightTaskParametre {
+  width: 90%;
+  height: 7%;
+  margin-left: 5%;
+  margin-bottom: 4%
 }

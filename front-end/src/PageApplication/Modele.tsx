@@ -1,68 +1,125 @@
-import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import { getColorForText } from '../components/ModeleCouleurs';
+import React, { useState, useEffect } from 'react';
+import { getColorForText, modeleClassique, modeleDegrade, modeleSpeciale, colors, colorDegrades} from '../components/ModeleBG';
 
-interface ButtonData {
+interface ModeleType {
     text: string;
-    image?: string;
 }
 
 const ResponsiveModele: React.FC = () => {
-    const [modeleClassique] = useState<ButtonData[]>([
-        { text: 'black' }, { text: 'white' }, { text: 'blue' }, { text: 'green' }, { text: 'red' }, { text: 'yellow' },
-        { text: 'orange' }, { text: 'purple' }, { text: 'pink' }, { text: 'tan' }, { text: 'brown' }, { text: 'grey' }
-    ]);
+    const [selectedModel, setSelectedModel] = useState<string>('');
+    const [showClassique, setShowClassique] = useState<boolean>(true);
+    const [showDegrade, setShowDegrade] = useState<boolean>(true);
+    const [showSpeciale, setShowSpeciale] = useState<boolean>(true);
 
-    const [modeleSpeciale] = useState<ButtonData[]>([
-        { text: 'Osaka', image: "./Image/OsakaPlane.jpg" },
-        { text: 'Osaka', image: "./Image/OsakaMexico.jpg" },
-        { text: 'Osaka', image: "./Image/OsakaFishing.jpg" },
-        { text: 'Osaka', image: "./Image/OsakaCartoon.jpg" },
-        { text: 'Osaka', image: "./Image/OsakaSleep.jpg" },
-        { text: 'Chiyo', image: "./Image/ChiyoCry.jpg" },
-        { text: 'Kaorin', image: "./Image/KaorinBlush.jpg" }
-    ]);
+    const buttonModeleType: ModeleType[] = [
+        { text: 'Tout afficher' },
+        { text: 'Modeles Classiques' },
+        { text: 'Modeles Dégradés' },
+        { text: 'Modeles Spéciaux' },
+    ];
+
+    useEffect(() => {
+        const storedModel = localStorage.getItem('selectedModel');
+        if (storedModel) {
+            setSelectedModel(storedModel);
+        }
+    }, [])
+
+    const handleModelChange = (model: string) => {
+        setSelectedModel(model === selectedModel ? '' : model); // Réinitialiser si c'est déjà sélectionné
+        localStorage.setItem('selectedModel', model === selectedModel ? '' : model);
+    };
+
+    const getBackground = (model: string) => {
+        const selectedButton = modeleSpeciale.find(button => button.text === model);
+        if (selectedButton && selectedButton.image) {
+            return `url(${selectedButton.image})`;
+        } else if (colorDegrades[model]) {
+            return colorDegrades[model];
+        } else {
+            return colors[model] || colors.white;
+        }
+    };
 
     return (
-        <div className="right-side">
+        <div className="right-side" style={{ background: selectedModel ? getBackground(selectedModel) : '', overflow:'auto'}}>
+            <div className='outlineModeleType outline'>
+            {buttonModeleType.map((button, index) => (
+                <button type='button' className='modeleType' key={index}
+                    onClick={() => {
+                        switch (button.text) {
+                            case 'Tout afficher':
+                                setShowClassique(true);
+                                setShowDegrade(true);
+                                setShowSpeciale(true);
+                                break;
+                            case 'Modeles Classiques':
+                                setShowClassique(true);
+                                setShowDegrade(false);
+                                setShowSpeciale(false);
+                                break;
+                            case 'Modeles Dégradés':
+                                setShowClassique(false);
+                                setShowDegrade(true);
+                                setShowSpeciale(false);
+                                break;
+                            case 'Modeles Spéciaux':
+                                setShowClassique(false);
+                                setShowDegrade(false);
+                                setShowSpeciale(true);
+                                break;
+                        }
+                    }}
+                >
+                    <p>{button.text}</p>
+                </button>
+            ))}
+            </div>
 
-            <h3>Modèles classiques</h3>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                {modeleClassique.map((button, index) => (
-                    <Button key={index} sx={{
-                        color: getColorForText(button.text), backgroundColor: getColorForText(button.text),
-                        fontFamily: 'monospace', display: 'block', textTransform: 'none', width: 'calc(20% - 3% - 1px)',
-                        border: 'solid black', borderRadius: '20px', height: '90px', marginBottom: '3%',
-                        marginRight: index % 5 === 4 ? '0' : '3%'
-                    }}>
-                        <p>{button.text}</p>
-                    </Button>
-                ))}
-            </Box>
+            {showClassique && (
+                <>
+                    <h3>Modèles Classiques</h3>
+                    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                        {modeleClassique.map((button, index) => (
+                            <button type="button" className='modeleSelect' key={index} onClick={() => handleModelChange(button.text)}
+                                style={{backgroundColor: getColorForText(button.text), marginRight: index % 5 === 4 ? '0' : '3%' }}
+                            />
+                        ))}
+                    </div>
+                </>
+            )}
 
-            <h3>Modèles Spéciales</h3>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                {modeleSpeciale.map((button, index) => (
-                    <Button key={index} sx={{
-                        color: 'black', backgroundColor: 'white', fontFamily: 'monospace', display: 'block', textTransform: 'none', width: 'calc(20% - 3% - 1px)',
-                        border: 'solid black', borderRadius: '20px', height: '90px', marginBottom: '3%',
-                        marginRight: index % 5 === 4 ? '0' : '3%', position: 'relative', overflow: 'hidden'
-                    }}>
-                        <p>{button.text}</p>
+            {showDegrade && (
+                <>
+                    <h3>Modèles Dégradés</h3>
+                    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                        {modeleDegrade.map((button, index) => (
+                            <button type="button" className='modeleSelect' key={index} onClick={() => handleModelChange(button.text)} 
+                                style={{marginRight: index % 5 === 4 ? '0' : '3%', background: button.background}}
+                            />
+                        ))}                    
+                    </div>
+                </>
+            )}
 
-                        {button.image && (
-                            <div className="image-container" style={{
-                                position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '120%', height: '120%'
-                            }}>
-                                <img src={button.image} alt={button.text} style={{
-                                    maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', objectPosition: 'center'
-                                }} className="image-hover" />
-                            </div>
-                        )}
-                    </Button>
-                ))}
-            </Box>
+            {showSpeciale && (
+                <>
+                    <h3>Modèles Spéciaux</h3>
+                    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                        {modeleSpeciale.map((button, index) => (
+                            <button type="button" className='modeleSelect' key={index} onClick={() => handleModelChange(button.text)}
+                                style={{ marginRight: index % 5 === 4 ? '0' : '3%', position: 'relative', overflow: 'hidden' }}
+                                >
+                                {button.image && (
+                                    <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '120%', height: '120%' }}>
+                                        <img src={button.image} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', objectPosition: 'center' }} />
+                                    </div>
+                                )}
+                            </button>
+                        ))}
+                    </div>
+                </>
+            )}
         </div>
     );
 };

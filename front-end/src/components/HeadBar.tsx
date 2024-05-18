@@ -8,15 +8,15 @@ import Button from '@mui/material/Button';
 function ResponsiveHeadBar() {
 
     return (
-        <AppBar position="static">
+        <AppBar position="static" sx={{borderBottom:'solid black'}}>
             <Container maxWidth="xl">
                 <Toolbar>
-                    <Typography variant="h6" sx={{ mr: 2, display: { xs: 'none', md: 'flex' }, fontWeight: 700, color: 'white', textDecoration: 'none' }}>
-                        <p> AZU <img src="./Image/OsakaPlane.jpg" height='50' width='70' alt="logo" /> TRELLO </p>
+                    <Typography variant="h6" sx={{mr: 2, color: 'white', textDecoration: 'none', float:'left'}}>
+                        <p> Azu <img src="./ModeleBG/OsakaPlane.jpg" height='20' width='30' alt="logo" /> Trello </p>
                     </Typography>
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, marginLeft: '10px' }}>
-                        <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, marginLeft: '10px'}}>
+                        <Button sx={{ my: 2, color: 'white', display: 'block', textTransform:'none'}}>
                         <a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>Espaces de travail</a>
                         </Button>
                     </Box>

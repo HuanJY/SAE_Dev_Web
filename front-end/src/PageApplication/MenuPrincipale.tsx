@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import {Link} from 'react-router-dom';
 import WorkspaceDialog from '../components/WorkspaceDialog';
 
 interface ButtonData {
     text: string;
+    path: string;
 }
 
 const ResponsiveMenuPrincipale: React.FC = () => {
     const [open, setOpen] = useState<boolean>(false);
     const [buttonsTab, setButtonsTab] = useState<ButtonData[]>([
-        { text: 'Exemple tableau'},
-        { text: 'Exemple tableau'},
-        { text: 'Exemple tableau'}
+        { text: 'Exemple tableau', path: '/Liste'}
     ]);
     
     const handleClickOpen = () => {
@@ -23,25 +21,27 @@ const ResponsiveMenuPrincipale: React.FC = () => {
     const handleClose = (title: string) => {
         setOpen(false);
         if (title) {
-            setButtonsTab([...buttonsTab, { text: title }]);
+            setButtonsTab([...buttonsTab, { text: title, path: `/path/${title.toLowerCase().replace(/\s+/g, '-')}` }]);
         }
     };
 
     return (
-        <div className="right-side">
+        <div className="right-side" style={{ maxHeight: '900px', overflowY: 'auto'}}>
             <h3>Vue d'ensemble</h3>
 
-            <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap'}}>
                 {buttonsTab.map((button, index) => (
-                <Button key={index} sx={{ color: 'black', fontFamily: 'monospace', display: 'block', textTransform: 'none', width: 'calc(33% - 2% - 1px)', border: 'solid black', borderRadius: '20px', height: '300px', marginBottom: '3%', marginRight: index % 3 === 2 ? '0' : '3%' }}>
-                    <p>{button.text}</p>
-                </Button>
+                    <Link key={index} to={button.path} style={{textDecoration: 'none',   width: 'calc(33% - 2% - 1px)', height: '300px', marginRight: index % 3 === 2 ? '0' : '3%', marginBottom:'3%' }}>
+                        <button type='button' style={{width:'100%', height:'100%'}}>
+                            <p>{button.text}</p>
+                        </button>
+                    </Link>
                 ))}
-                <Button sx={{ color: 'black', fontFamily: 'monospace', display: 'block', textTransform: 'none', width: 'calc(33% - 2% - 1px)', border: 'solid black', paddingRight: '15px', borderRadius: '20px', height: '300px', marginBottom: '3%' }} onClick={handleClickOpen}>
-                    <AddBoxIcon /> Ajouter un tableau
-                </Button>
+                <button type='button' className='buttonBoard' onClick={handleClickOpen}>
+                   <AddBoxIcon /> <p style={{marginLeft:'1%'}}>Ajouter un tableau</p>
+                </button>
                 <WorkspaceDialog open={open} handleClose={handleClose} />
-            </Box>
+            </div>
         </div>
     );
 };
