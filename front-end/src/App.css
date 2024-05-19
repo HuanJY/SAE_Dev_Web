@@ -152,6 +152,28 @@ hr {
   border-top: solid black;
 }
 
+.labels {
+  width: 17%;
+  height: 15px;
+  left: 3%;
+  top: 13%;
+  position: absolute;
+  border-radius: 20px;
+  opacity: 0;
+}
+
+.label-red {
+  background-color: red;
+}
+
+.label-orange {
+  background-color: orange;
+}
+
+.label-visible {
+  opacity: 1;
+}
+
 .iconParametre {
   width: 17%;
   padding : 2%;
@@ -159,7 +181,6 @@ hr {
 
 .taskForm {
   width: 100%;
-  height: auto;
   padding: 5%;
 }
 
@@ -218,13 +239,8 @@ hr {
 
 .buttonApplyTaskParametre{
   width: 100%;
-  height: 7%;
-  margin-bottom: calc(2% - 2px);
-}
-
-.buttonCancelTaskParametre{
-  width: 100%;
-  height: 7%;
+  height: 12%;
+  margin-top:7%;
 }
 
 .outlineRightTaskParametre {
@@ -245,4 +261,11 @@ hr {
   height: 7%;
   margin-left: 5%;
   margin-bottom: 4%
+}
+
+.labelParametre {
+  width: 96%;
+  height: 40px;
+  margin-top: 1%;
+  margin-left: 2%;
 }
