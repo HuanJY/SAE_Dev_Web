@@ -67,13 +67,13 @@ export const modeleDegrade: ButtonData[] = [
 ];
 
 export const modeleSpeciale: ButtonData[] = [
-    { text: 'OsakaP', image: "./ModeleBG/OsakaPlane.jpg" },
-    { text: 'OsakaM', image: "./ModeleBG/OsakaMexico.jpg" },
-    { text: 'OsakaF', image: "./ModeleBG/OsakaFishing.jpg" },
-    { text: 'OsakaC', image: "./ModeleBG/OsakaCartoon.jpg" },
-    { text: 'OsakaS', image: "./ModeleBG/OsakaSleep.jpg" },
-    { text: 'ChiyoC', image: "./ModeleBG/ChiyoCry.jpg" },
-    { text: 'KaorinB', image: "./ModeleBG/KaorinBlush.jpg" },
+    { text: 'OsakaP', image: "./Image/OsakaPlane.jpg" },
+    { text: 'OsakaM', image: "./Image/OsakaMexico.jpg" },
+    { text: 'OsakaF', image: "./Image/OsakaFishing.jpg" },
+    { text: 'OsakaC', image: "./Image/OsakaCartoon.jpg" },
+    { text: 'OsakaS', image: "./Image/OsakaSleep.jpg" },
+    { text: 'ChiyoC', image: "./Image/ChiyoCry.jpg" },
+    { text: 'KaorinB', image: "./Image/KaorinBlush.jpg" },
 ];
 
 export const colorDegrades: Record<string, string> = {

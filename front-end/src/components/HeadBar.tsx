@@ -12,20 +12,14 @@ function ResponsiveHeadBar() {
             <Container maxWidth="xl">
                 <Toolbar>
                     <Typography variant="h6" sx={{mr: 2, color: 'white', textDecoration: 'none', float:'left'}}>
-                        <p> Azu <img src="./ModeleBG/OsakaPlane.jpg" height='20' width='30' alt="logo" /> Trello </p>
-                    </Typography>
+                        <p> Azu <img src="./Image/OsakaPlane.jpg" height='20' width='30' alt="logo" /> Trello </p>
+                    </Typography>   
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, marginLeft: '10px'}}>
-                        <Button sx={{ my: 2, color: 'white', display: 'block', textTransform:'none'}}>
-                        <a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>Espaces de travail</a>
-                        </Button>
-                    </Box>
-
-                    <Box sx={{ flexGrow: 0 }}>
-                        <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+                    <div>
+                        <button type='button'>
                             Deconnexion
-                        </Button>
-                    </Box>
+                        </button>
+                    </div>
 
                 </Toolbar>
             </Container>
