@@ -152,26 +152,19 @@ hr {
   border-top: solid black;
 }
 
-.labels {
+.labelsTaskForm {
   width: 17%;
   height: 15px;
   left: 3%;
   top: 13%;
   position: absolute;
   border-radius: 20px;
-  opacity: 0;
+  overflow: auto;
 }
 
-.label-red {
-  background-color: red;
-}
-
-.label-orange {
-  background-color: orange;
-}
-
-.label-visible {
-  opacity: 1;
+.labels {
+  width: 100%;
+  height: 100%;
 }
 
 .iconParametre {
@@ -202,6 +195,19 @@ hr {
 }
 
 /* Class pour TaskParametre */
+
+.modalForm {
+  width: 50%;
+  height: 80%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 15px;
+  background-color: bisque;
+  border: solid black;
+}
 
 .outlineLeftTaskParametre {
   width: 70%;
@@ -239,8 +245,8 @@ hr {
 
 .buttonApplyTaskParametre{
   width: 100%;
-  height: 12%;
-  margin-top:7%;
+  height: 7%;
+  margin-top:6%;
 }
 
 .outlineRightTaskParametre {
@@ -264,8 +270,24 @@ hr {
 }
 
 .labelParametre {
-  width: 96%;
+  width: 100%;
   height: 40px;
-  margin-top: 1%;
-  margin-left: 2%;
+  margin-top: 2%;
+}
+
+.labelRegroup {
+  width: 100%;
+  height: 5%;
+  margin-top: 35%;
+}
+
+.labelTask {
+  width: 20%;
+  height: 50%;
+  margin-left: 4%;
+  border-radius: 20px;
+  color: white;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
 }

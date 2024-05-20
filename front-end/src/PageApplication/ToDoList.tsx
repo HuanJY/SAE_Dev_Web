@@ -15,15 +15,21 @@ const ResponsiveTodoList: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [selectedListIndex, setSelectedListIndex] = useState<number | null>(null);
     const [selectedTaskIndex, setSelectedTaskIndex] = useState<number | null>(null);
-    const [labels, setLabels] = useState<string[][]>(() => {
-        const storedLabels = localStorage.getItem('taskLabels');
-        return storedLabels ? JSON.parse(storedLabels) : lists.map(() => []);
+    const [labelsPriority, setLabelsPriority] = useState<string[][]>(() => {
+        const storedLabelsPriority = localStorage.getItem('taskLabelsPriority');
+        return storedLabelsPriority ? JSON.parse(storedLabelsPriority) : lists.map(() => []);
     });
+    const [labelsStatue, setLabelsStatue] = useState<string[][]>(() => {
+        const storedLabelsStatue = localStorage.getItem('taskLabelsStatue');
+        return storedLabelsStatue ? JSON.parse(storedLabelsStatue) : lists.map(() => []);
+    });
+    
 
     useEffect(() => {
         localStorage.setItem('todoLists', JSON.stringify(lists));
-        localStorage.setItem('taskLabels', JSON.stringify(labels));
-    }, [lists, labels]);
+        localStorage.setItem('taskLabelsPriority', JSON.stringify(labelsPriority));
+        localStorage.setItem('taskLabelsStatue', JSON.stringify(labelsStatue));
+    }, [lists, labelsPriority, labelsStatue]);
 
     const handleClickTask = (listIndex: number, taskIndex: number) => {
         setSelectedListIndex(listIndex);
@@ -44,23 +50,28 @@ const ResponsiveTodoList: React.FC = () => {
     };
 
     const handleAddList = () => {
-        const newLists = [...lists, ['Nouvelle tâche']]; // Ajoutez la tâche avec le titre par défaut
+        const newLists = [...lists, ['Nouvelle tâche']];
         const newAnchorEls = [...anchorEls, null];
         const newVisibility = [...visibility, true];
-        const newLabels = [...labels, []];
+        const newLabelsPriority = [...labelsPriority, []];
+        const newLabelsStatue = [...labelsStatue, []];
         setLists(newLists);
         setAnchorEls(newAnchorEls);
         setVisibility(newVisibility);
-        setLabels(newLabels);
+        setLabelsPriority(newLabelsPriority);
+        setLabelsStatue(newLabelsStatue);
     };
 
     const handleAddTask = (listIndex: number) => {
         const updatedLists = [...lists];
-        updatedLists[listIndex].push('Nouvelle tâche'); // Ajouter une nouvelle tâche avec un libellé par défaut
-        const updatedLabels = [...labels];
-        updatedLabels[listIndex].push('');
+        updatedLists[listIndex].push('Nouvelle tâche');
+        const updatedLabelsPriority = [...labelsPriority];
+        const updatedLabelsStatue = [...labelsStatue];
+        updatedLabelsPriority[listIndex].push('');
+        updatedLabelsStatue[listIndex].push('');
         setLists(updatedLists);
-        setLabels(updatedLabels);
+        setLabelsPriority(updatedLabelsPriority);
+        setLabelsStatue(updatedLabelsStatue);
     };
 
     const handleToggleVisibility = (listIndex: number) => {
@@ -71,29 +82,37 @@ const ResponsiveTodoList: React.FC = () => {
 
     const handleDeleteList = (listIndex: number) => {
         const updatedLists = lists.filter((_, index) => index !== listIndex);
-        const updatedLabels = labels.filter((_, index) => index !== listIndex);
+        const updatedLabelsPriority = labelsPriority.filter((_, index) => index !== listIndex);
+        const updatedLabelsStatue = labelsStatue.filter((_, index) => index !== listIndex);
         setLists(updatedLists);
-        setLabels(updatedLabels);
+        setLabelsPriority(updatedLabelsPriority);
+        setLabelsStatue(updatedLabelsStatue);
         handleClose(listIndex);
     };
 
     const handleDeleteTask = (listIndex: number, taskIndex: number) => {
         const updatedLists = [...lists];
-        updatedLists[listIndex].splice(taskIndex, 1); // Supprimer la tâche à l'index spécifié
-        const updatedLabels = [...labels];
-        updatedLabels[listIndex].splice(taskIndex, 1); // Supprimer l'étiquette correspondante
+        updatedLists[listIndex].splice(taskIndex, 1);
+        const updatedLabelsPriority = [...labelsPriority];
+        const updatedLabelsStatue = [...labelsStatue];
+        updatedLabelsPriority[listIndex].splice(taskIndex, 1);
+        updatedLabelsStatue[listIndex].splice(taskIndex, 1);
         setLists(updatedLists);
-        setLabels(updatedLabels);
-        setIsModalOpen(false); // Fermer la fenêtre modale après la suppression de la tâche
+        setLabelsPriority(updatedLabelsPriority);
+        setLabelsStatue(updatedLabelsStatue);
+        setIsModalOpen(false);
     };
 
     const handleDeleteAllTasks = (listIndex: number) => {
         const updatedLists = [...lists];
         updatedLists[listIndex] = [];
-        const updatedLabels = [...labels];
-        updatedLabels[listIndex] = [];
+        const updatedLabelsPriority = [...labelsPriority];
+        const updatedLabelsStatue= [...labelsStatue];
+        updatedLabelsPriority[listIndex] = [];
+        updatedLabelsStatue[listIndex] = [];
         setLists(updatedLists);
-        setLabels(updatedLabels);
+        setLabelsPriority(updatedLabelsPriority);
+        setLabelsStatue(updatedLabelsStatue);
         handleClose(listIndex);
     };
 
@@ -101,17 +120,27 @@ const ResponsiveTodoList: React.FC = () => {
         const updatedLists = [...lists];
         updatedLists[listIndex][taskIndex] = newTitle;
         setLists(updatedLists);
-        localStorage.setItem(`taskTitle-${listIndex}-${taskIndex}`, newTitle); // Stocker le titre dans le localStorage
+        localStorage.setItem(`taskTitle-${listIndex}-${taskIndex}`, newTitle);
     };
 
-    const handleToggleLabel = (listIndex: number, taskIndex: number, labelStyle: string) => {
-        const updatedLabels = [...labels];
-        if (labelStyle === 'Retirer les étiquettes') {
-            updatedLabels[listIndex][taskIndex] = ''; // Remove label
+    const handleToggleLabelsPriority = (listIndex: number, taskIndex: number, labelsPriorityStyle: string) => {
+        const updatedLabelsPriority = [...labelsPriority];
+        if (labelsPriorityStyle === 'Retirer les étiquettes') {
+            updatedLabelsPriority[listIndex][taskIndex] = '';
         } else {
-            updatedLabels[listIndex][taskIndex] = labelStyle; // Add label
+            updatedLabelsPriority[listIndex][taskIndex] = labelsPriorityStyle;
         }
-        setLabels(updatedLabels);
+        setLabelsPriority(updatedLabelsPriority);
+    };
+
+    const handleToggleLabelsStatue = (listIndex: number, taskIndex: number, labelsStatueStyle: string) => {
+        const updatedLabelsStatue = [...labelsStatue];
+        if (labelsStatueStyle === 'Retirer les étiquettes') {
+            updatedLabelsStatue[listIndex][taskIndex] = '';
+        } else {
+            updatedLabelsStatue[listIndex][taskIndex] = labelsStatueStyle;
+        }
+        setLabelsStatue(updatedLabelsStatue);
     };
 
     return (
@@ -119,62 +148,88 @@ const ResponsiveTodoList: React.FC = () => {
             <div style={{ display: 'flex', flexWrap: 'nowrap', width: 'max-content' }}>
                 {lists.map((tasks, listIndex) => (
                     <div className='toDoListForm' key={listIndex}>
-                        <div className='headerToDoList'>                         
-                            <div style={{width: '73%',color: 'white', textAlign: 'center'}}>
+                        <div className='headerToDoList'>
+                            <div style={{ width: '73%', color: 'white', textAlign: 'center' }}>
                                 <p>Nouvelle Liste</p>
                             </div>
                             <div className='outline' style={{ width: '10%', marginRight: '2%', opacity: visibility[listIndex] ? 0 : 1 }}>
                                 <VisibilityIcon />
                             </div>
-                            <button type='button' style={{ width: '17%', padding:'2%'}} onClick={(event) => handleClick(event, listIndex)}>
+                            <button type='button' style={{ width: '17%', padding: '2%' }} onClick={(event) => handleClick(event, listIndex)}>
                                 <TuneIcon />
                             </button>
-                            <ListMenu 
-                                anchorEl={anchorEls[listIndex]} 
-                                handleClose={() => handleClose(listIndex)} 
-                                handleAddTask={() => handleAddTask(listIndex)} 
-                                handleToggleVisibility={() => handleToggleVisibility(listIndex)} 
-                                handleDeleteAllTasks={() => handleDeleteAllTasks(listIndex)} 
+                            <ListMenu
+                                anchorEl={anchorEls[listIndex]}
+                                handleClose={() => handleClose(listIndex)}
+                                handleAddTask={() => handleAddTask(listIndex)}
+                                handleToggleVisibility={() => handleToggleVisibility(listIndex)}
+                                handleDeleteAllTasks={() => handleDeleteAllTasks(listIndex)}
                                 handleDeleteList={() => handleDeleteList(listIndex)}
                             />
                         </div>
 
-                        <div style={{maxHeight: '580px', overflowY: 'auto', padding: '1%', backgroundImage: 'url(ModeleListBG/Colore.jpeg)', backgroundSize: 'cover'}}>
+                        <div style={{ maxHeight: '580px', overflowY: 'auto', padding: '1%', backgroundImage: 'url(ModeleListBG/Colore.jpeg)', backgroundSize: 'cover' }}>
                             {tasks.map((task, taskIndex) => (
                                 <div key={taskIndex} style={{ position: 'relative' }}>
-                                    <div className={`labels label-red ${labels[listIndex][taskIndex] === 'Principale' ? 'label-visible' : ''}`}></div>
-                                    <div className={`labels label-orange ${labels[listIndex][taskIndex] === 'Secondaire' ? 'label-visible' : ''}`}></div>
-                                    <button type='button' className='taskForm' onClick={() => handleClickTask(listIndex, taskIndex)} style={{marginTop: '2%', marginBottom:'2%'}}>
+                                    <button type='button' className='taskForm' onClick={() => handleClickTask(listIndex, taskIndex)} style={{ marginTop: '2%', marginBottom: '2%' }}>
                                         <p>{task}</p>
+
+                                        <div className='labelsTaskForm'>
+                                            {labelsPriority[listIndex][taskIndex] === 'Principale' && (
+                                                <div className='labels' style={{backgroundColor: 'red'}}></div>
+                                            )}
+
+                                            {labelsPriority[listIndex][taskIndex] === 'Secondaire' && (
+                                                <div className='labels' style={{backgroundColor: 'orange'}}></div>
+                                            )}
+
+                                            {labelsPriority[listIndex][taskIndex] === 'Tertiaire' && (
+                                                <div className='labels' style={{backgroundColor: 'yellow'}}></div>
+                                            )}
+                                        </div>
+
+                                        <div className='labelsTaskForm' style={{marginTop:'20px'}}>
+                                            {labelsStatue[listIndex][taskIndex] === 'Urgent' && (
+                                            <div className='labels' style={{backgroundColor: 'green'}}></div>
+                                            )}
+
+                                            {labelsStatue[listIndex][taskIndex] === 'Très Urgent' && (
+                                                <div className='labels' style={{backgroundColor: 'blue'}}></div>
+                                            )}
+                                        </div>
+                                        
+
+
                                     </button>
-                                    <TaskParametre 
-                                        open={isModalOpen && selectedListIndex === listIndex && selectedTaskIndex === taskIndex} 
+                                    <TaskParametre
+                                        open={isModalOpen && selectedListIndex === listIndex && selectedTaskIndex === taskIndex}
                                         handleClose={() => {
                                             setIsModalOpen(false);
                                             setSelectedListIndex(null);
                                             setSelectedTaskIndex(null);
                                         }}
-                                        handleTitleChange={(newTitle: string) => handleTitleChange(listIndex, taskIndex, newTitle)} 
-                                        taskTitle={task} // Passer le titre de la tâche
-                                        handleDeleteTask={() => handleDeleteTask(listIndex, taskIndex)} // Nouvelle prop pour supprimer la tâche
-                                        handleToggleLabel={(labelStyle: string) => handleToggleLabel(listIndex, taskIndex, labelStyle)} // Ajouter la fonction handleToggleLabel
+                                        handleTitleChange={(newTitle: string) => handleTitleChange(listIndex, taskIndex, newTitle)}
+                                        taskTitle={task}
+                                        handleDeleteTask={() => handleDeleteTask(listIndex, taskIndex)}
+                                        handleToggleLabelsPriority={(labelsPriorityStyle: string) => handleToggleLabelsPriority(listIndex, taskIndex, labelsPriorityStyle)}
+                                        handleToggleLabelsStatue={(labelsStatueStyle: string) => handleToggleLabelsStatue(listIndex, taskIndex, labelsStatueStyle)}
                                     />
                                 </div>
-                            ))}                      
+                            ))}
                         </div>
 
                         <div className='footerToDoList'>
-                            <button type='button' onClick={() => handleAddTask(listIndex)} style={{ width: '83%', marginRight: '2%'}}>
-                                <AddIcon/> <p>Ajouter une tâche</p>
+                            <button type='button' onClick={() => handleAddTask(listIndex)} style={{ width: '83%', marginRight: '2%' }}>
+                                <AddIcon /> <p>Ajouter une tâche</p>
                             </button>
                             <button type='button' className='iconParametre'>
-                                <TuneIcon/>
+                                <TuneIcon />
                             </button>
-                        </div>     
+                        </div>
                     </div>
                 ))}
 
-                <button type='button' onClick={handleAddList} style={{width: '400px', height:'40px'}}>
+                <button type='button' onClick={handleAddList} style={{ width: '400px', height: '40px' }}>
                     <AddIcon /> <p>Ajouter une liste</p>
                 </button>
             </div>

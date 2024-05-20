@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Modal from '@mui/material/Modal';
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 
 interface ListParametreProps {
     open: boolean;
@@ -9,26 +8,45 @@ interface ListParametreProps {
     handleTitleChange: (newTitle: string) => void;
     taskTitle: string;
     handleDeleteTask: () => void;
-    handleToggleLabel: (labelStyle: string) => void; // Modifier la signature pour accepter une string en argument
+    handleToggleLabelsPriority: (LabelsPriorityStyle: string) => void; // Modifier la signature pour accepter une string en argument
+    handleToggleLabelsStatue: (LabelsStatueStyle: string) => void; // Modifier la signature pour accepter une string en argument
 }
 
-interface ButtonAction{
+interface ButtonAction {
     text: string;
     action?: () => void;
 }
 
-interface LabelParametre{
+interface LabelsPriority {
     text: string;
     action?: () => void;
 }
 
-const ResponsiveTaskParametre: React.FC<ListParametreProps> = ({open, handleClose, handleTitleChange, taskTitle, handleDeleteTask, handleToggleLabel,}) => {
+interface LabelsStatue {
+    text: string;
+    action?: () => void;
+}
 
+const ResponsiveTaskParametre: React.FC<ListParametreProps> = ({
+    open,
+    handleClose,
+    handleTitleChange,
+    taskTitle,
+    handleDeleteTask,
+    handleToggleLabelsPriority,
+    handleToggleLabelsStatue,
+}) => {
     const [title, setTitle] = useState<string>(() => taskTitle || '');
     const [description, setDescription] = useState<string>(() => {
         const storedDescription = localStorage.getItem('taskDescription');
         return storedDescription || '';
     });
+
+    const [selectedLabelsPriority, setSelectedLabelsPriority] = useState<string>(''); // New state for selected label priority
+    const [selectedLabelsPriorityColor, setSelectedLabelsPriorityColor] = useState<string>(''); // New state for selected label priority color
+
+    const [selectedLabelsStatue, setSelectedLabelsStatue] = useState<string>(''); // New state for selected label statue
+    const [selectedLabelsStatueColor, setSelectedLabelsStatueColor] = useState<string>(''); // New state for selected label statue color
 
     useEffect(() => {
         localStorage.setItem('taskDescription', description);
@@ -86,9 +104,37 @@ const ResponsiveTaskParametre: React.FC<ListParametreProps> = ({open, handleClos
         setAnchorEl(null);
     };
 
-    const handleSelectLabel = (labelStyle: string) => {
-        handleToggleLabel(labelStyle);
-        handleCloseLabelMenu();
+    const LabelsPriorityStyles: { [key: string]: string } = {
+        'Principale': 'red',
+        'Secondaire': 'orange',
+        'Tertiaire': '#bdba00',
+    };
+
+    const labelsStatueStyles: { [key: string]: string } = {
+        'Très Urgent': 'blue',
+        'Urgent': 'green',
+        'Retirer les étiquettes': ''
+    };
+
+    const handleSelectLabelsPriority = (LabelsPriorityStyle: string) => {
+        handleToggleLabelsPriority(LabelsPriorityStyle);
+        setSelectedLabelsPriority(LabelsPriorityStyle);
+        setSelectedLabelsPriorityColor(LabelsPriorityStyles[LabelsPriorityStyle]);
+    };
+    
+    const handleSelectLabelsStatue = (LabelsStatueStyle: string) => {
+        if (LabelsStatueStyle === 'Retirer les étiquettes') {
+            setSelectedLabelsPriority('');
+            setSelectedLabelsStatue('');
+            setSelectedLabelsPriorityColor('');
+            setSelectedLabelsStatueColor('');
+            handleToggleLabelsPriority('Retirer les étiquettes');
+            handleToggleLabelsStatue('Retirer les étiquettes');
+        } else {
+            handleToggleLabelsStatue(LabelsStatueStyle);
+            setSelectedLabelsStatue(LabelsStatueStyle);
+            setSelectedLabelsStatueColor(labelsStatueStyles[LabelsStatueStyle]);
+        }
     };
 
     const buttonAction: ButtonAction[] = [
@@ -97,29 +143,21 @@ const ResponsiveTaskParametre: React.FC<ListParametreProps> = ({open, handleClos
         { text: 'Archiver' },
     ];
 
-    const labelParametre: LabelParametre[] = [
-        { text: 'Principale', action: () => handleSelectLabel('Principale') },
-        { text: 'Secondaire', action: () => handleSelectLabel('Secondaire') },
-        { text: 'Retirer les étiquettes', action: () => handleSelectLabel('Retirer les étiquettes')}
+    const LabelsPriority: LabelsPriority[] = [
+        { text: 'Principale', action: () => handleSelectLabelsPriority('Principale') },
+        { text: 'Secondaire', action: () => handleSelectLabelsPriority('Secondaire') },
+        { text: 'Tertiaire', action: () => handleSelectLabelsPriority('Tertiaire') },
     ];
     
+    const labelsStatue: LabelsStatue[] = [
+        { text: 'Très Urgent', action: () => handleSelectLabelsStatue('Très Urgent') },
+        { text: 'Urgent', action: () => handleSelectLabelsStatue('Urgent') },
+        { text: 'Retirer les étiquettes', action: () => handleSelectLabelsStatue('Retirer les étiquettes') }
+    ];
 
     return (
         <Modal open={open} onClose={handleClose}>
-            <div
-                style={{
-                    width: '50%',
-                    height: '80%',
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    padding: '20px',
-                    borderRadius: '15px',
-                    backgroundColor: 'bisque',
-                    border: 'solid black',
-                }}
-            >
+            <div className='modalForm'>
                 <div className='outlineLeftTaskParametre'>
                     <textarea
                         className='titleTask'
@@ -172,6 +210,22 @@ const ResponsiveTaskParametre: React.FC<ListParametreProps> = ({open, handleClos
                     <button type='button' className='buttonApplyTaskParametre' onClick={handleApplyChanges} style={{ float: 'right' }}>
                         Appliquer les modifications
                     </button>
+
+                    <div className='labelRegroup' style={{ display: 'flex', gap: '10px' }}>
+                        {selectedLabelsPriority && (
+                            <p className='labelTask' style={{ backgroundColor: selectedLabelsPriorityColor }}>
+                                {selectedLabelsPriority}
+                            </p>
+                        )}
+                        
+                        {selectedLabelsStatue && (
+                            <p className='labelTask' style={{ backgroundColor: selectedLabelsStatueColor }}>
+                                {selectedLabelsStatue}
+                            </p>
+                        )}
+                    </div>
+                    
+
                 </div>
                 <div className='outlineRightTaskParametre'>
                     <p>Suggérées</p>
@@ -189,15 +243,26 @@ const ResponsiveTaskParametre: React.FC<ListParametreProps> = ({open, handleClos
                         Etiquettes
                     </button>
 
-                    <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleCloseLabelMenu} anchorOrigin={{vertical: 'bottom', horizontal: 'left'}}
-                        PaperProps={{style: {width: '300px', height: '400px', backgroundColor: 'bisque', border: 'solid black', borderRadius: '20px', marginTop:'10px'}}}>
+                    <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleCloseLabelMenu} anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                        PaperProps={{ style: { width: '240px', height: 'auto', backgroundColor: 'bisque', border: 'solid black', borderRadius: '20px', marginTop: '10px', textAlign:'center', paddingLeft:'10px', paddingRight:'10px' }}}>
 
-                        {labelParametre.map((button, index) => (
-                        <button type="button" key={index} className='labelParametre' onClick={button.action}>
-                            {button.text}
-                        </button>
-                    ))}
+                        <p > Priorité </p>
 
+                        {LabelsPriority.map((button, index) => (
+                            <button type="button" key={index} className='labelParametre' onClick={button.action}>
+                                {button.text}
+                            </button>
+                        ))}
+                        
+                        <hr className='sepButton'/>
+
+                        <p > Priorité </p>
+
+                        {labelsStatue.map((button, index) => (
+                            <button type="button" key={index} className='labelParametre' onClick={button.action}>
+                                {button.text}
+                            </button>
+                        ))}
 
                     </Menu>
 
@@ -207,7 +272,7 @@ const ResponsiveTaskParametre: React.FC<ListParametreProps> = ({open, handleClos
                     <button type='button' className='buttonRightTaskParametre'>
                         Dates
                     </button>
-                    
+
                     <hr />
 
                     <p>Actions</p>
