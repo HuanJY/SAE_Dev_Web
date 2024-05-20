@@ -7,27 +7,44 @@ import TextField from '@mui/material/TextField';
 interface WorkspaceDialogProps {
     open: boolean;
     handleClose: (title: string) => void;
+    handleCancel: () => void;
+    error: string;
 }
 
-const ResponsiveWorkspaceDialog: React.FC<WorkspaceDialogProps> = ({ open, handleClose }) => {
+const WorkspaceDialog: React.FC<WorkspaceDialogProps> = ({ open, handleClose, handleCancel, error }) => {
     const [title, setTitle] = useState<string>('');
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(event.target.value);
     };
 
-    const handleCloseDialog = () => {
+    const handleAdd = () => {
         handleClose(title);
         setTitle('');
     };
 
+    const handleCancelClick = () => {
+        handleCancel();
+        setTitle('');
+    };
+
     return (
-        <Dialog open={open} onClose={handleCloseDialog}>
+        <Dialog open={open} onClose={handleCancelClick}>
             <DialogTitle>Ajouter un tableau</DialogTitle>
-            <TextField autoFocus margin="dense" label="Titre du tableau" type="text" value={title} onChange={handleChange} fullWidth />
-            <Button onClick={handleCloseDialog}>Ajouter</Button>
+            <TextField
+                autoFocus
+                margin="dense"
+                label="Titre du tableau"
+                type="text"
+                value={title}
+                onChange={handleChange}
+                fullWidth
+            />
+            {error && <p style={{ color: 'red' }}>{error}</p>} {/* Affichez le message d'erreur */}
+            <Button onClick={handleAdd}>Ajouter</Button>
+            <Button onClick={handleCancelClick}>Annuler</Button>
         </Dialog>
     );
 };
 
-export default ResponsiveWorkspaceDialog;
+export default WorkspaceDialog;

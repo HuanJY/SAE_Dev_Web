@@ -10,6 +10,7 @@ interface ListParametreProps {
     handleDeleteTask: () => void;
     handleToggleLabelsPriority: (LabelsPriorityStyle: string) => void; // Modifier la signature pour accepter une string en argument
     handleToggleLabelsStatue: (LabelsStatueStyle: string) => void; // Modifier la signature pour accepter une string en argument
+    handleArchiveTask: () => void;
 }
 
 interface ButtonAction {
@@ -35,6 +36,7 @@ const ResponsiveTaskParametre: React.FC<ListParametreProps> = ({
     handleDeleteTask,
     handleToggleLabelsPriority,
     handleToggleLabelsStatue,
+    handleArchiveTask
 }) => {
     const [title, setTitle] = useState<string>(() => taskTitle || '');
     const [description, setDescription] = useState<string>(() => {
@@ -139,8 +141,8 @@ const ResponsiveTaskParametre: React.FC<ListParametreProps> = ({
 
     const buttonAction: ButtonAction[] = [
         { text: 'Déplacer' },
-        { text: 'Supprimer', action: handleDeleteTask },
-        { text: 'Archiver' },
+        { text: 'Supprimer', action: handleDeleteTask},
+        { text: 'Archiver', action: handleArchiveTask},
     ];
 
     const LabelsPriority: LabelsPriority[] = [
@@ -152,7 +154,6 @@ const ResponsiveTaskParametre: React.FC<ListParametreProps> = ({
     const labelsStatue: LabelsStatue[] = [
         { text: 'Très Urgent', action: () => handleSelectLabelsStatue('Très Urgent') },
         { text: 'Urgent', action: () => handleSelectLabelsStatue('Urgent') },
-        { text: 'Retirer les étiquettes', action: () => handleSelectLabelsStatue('Retirer les étiquettes') }
     ];
 
     return (
@@ -263,6 +264,12 @@ const ResponsiveTaskParametre: React.FC<ListParametreProps> = ({
                                 {button.text}
                             </button>
                         ))}
+
+                        <hr className='sepButton'/>
+
+                        <button type="button" className='labelParametre'onClick={() => handleSelectLabelsStatue('Retirer les étiquettes')} style={{paddingBottom:'10px'}}>
+                            Retirer les étiquettes
+                        </button>
 
                     </Menu>
 

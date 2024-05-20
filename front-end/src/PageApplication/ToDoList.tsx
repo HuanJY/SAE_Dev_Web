@@ -55,11 +55,13 @@ const ResponsiveTodoList: React.FC = () => {
         const newVisibility = [...visibility, true];
         const newLabelsPriority = [...labelsPriority, []];
         const newLabelsStatue = [...labelsStatue, []];
+        const newArchivedTasks = [...archivedTasks, [false]];
         setLists(newLists);
         setAnchorEls(newAnchorEls);
         setVisibility(newVisibility);
         setLabelsPriority(newLabelsPriority);
         setLabelsStatue(newLabelsStatue);
+        setArchivedTasks(newArchivedTasks);
     };
 
     const handleAddTask = (listIndex: number) => {
@@ -67,11 +69,14 @@ const ResponsiveTodoList: React.FC = () => {
         updatedLists[listIndex].push('Nouvelle tâche');
         const updatedLabelsPriority = [...labelsPriority];
         const updatedLabelsStatue = [...labelsStatue];
+        const updatedArchivedTasks = [...archivedTasks];
         updatedLabelsPriority[listIndex].push('');
         updatedLabelsStatue[listIndex].push('');
+        updatedArchivedTasks[listIndex].push(false);
         setLists(updatedLists);
         setLabelsPriority(updatedLabelsPriority);
         setLabelsStatue(updatedLabelsStatue);
+        setArchivedTasks(updatedArchivedTasks);
     };
 
     const handleToggleVisibility = (listIndex: number) => {
@@ -84,9 +89,11 @@ const ResponsiveTodoList: React.FC = () => {
         const updatedLists = lists.filter((_, index) => index !== listIndex);
         const updatedLabelsPriority = labelsPriority.filter((_, index) => index !== listIndex);
         const updatedLabelsStatue = labelsStatue.filter((_, index) => index !== listIndex);
+        const updatedArchivedTasks = archivedTasks.filter((_, index) => index !== listIndex);
         setLists(updatedLists);
         setLabelsPriority(updatedLabelsPriority);
         setLabelsStatue(updatedLabelsStatue);
+        setArchivedTasks(updatedArchivedTasks);
         handleClose(listIndex);
     };
 
@@ -97,9 +104,12 @@ const ResponsiveTodoList: React.FC = () => {
         const updatedLabelsStatue = [...labelsStatue];
         updatedLabelsPriority[listIndex].splice(taskIndex, 1);
         updatedLabelsStatue[listIndex].splice(taskIndex, 1);
+        const updatedArchivedTasks = [...archivedTasks];
+        updatedArchivedTasks[listIndex].splice(taskIndex, 1); // Supprimer l'entrée correspondante dans archivedTasks
         setLists(updatedLists);
         setLabelsPriority(updatedLabelsPriority);
         setLabelsStatue(updatedLabelsStatue);
+        setArchivedTasks(updatedArchivedTasks); // Mettre à jour l'état archivedTasks
         setIsModalOpen(false);
     };
 
@@ -107,12 +117,15 @@ const ResponsiveTodoList: React.FC = () => {
         const updatedLists = [...lists];
         updatedLists[listIndex] = [];
         const updatedLabelsPriority = [...labelsPriority];
-        const updatedLabelsStatue= [...labelsStatue];
+        const updatedLabelsStatue = [...labelsStatue];
         updatedLabelsPriority[listIndex] = [];
         updatedLabelsStatue[listIndex] = [];
+        const updatedArchivedTasks = [...archivedTasks];
+        updatedArchivedTasks[listIndex] = []; // Supprimer toutes les entrées correspondantes dans archivedTasks
         setLists(updatedLists);
         setLabelsPriority(updatedLabelsPriority);
         setLabelsStatue(updatedLabelsStatue);
+        setArchivedTasks(updatedArchivedTasks); // Mettre à jour l'état archivedTasks
         handleClose(listIndex);
     };
 
@@ -143,6 +156,15 @@ const ResponsiveTodoList: React.FC = () => {
         setLabelsStatue(updatedLabelsStatue);
     };
 
+    const [archivedTasks, setArchivedTasks] = useState<boolean[][]>(() => lists.map(() => []));
+
+    const handleArchiveTask = (listIndex: number, taskIndex: number) => {
+        const updatedArchivedTasks = [...archivedTasks];
+        updatedArchivedTasks[listIndex][taskIndex] = !updatedArchivedTasks[listIndex][taskIndex];
+        setArchivedTasks(updatedArchivedTasks);
+        setIsModalOpen(false);
+    };
+
     return (
         <div className="right-side" style={{ overflowX: 'auto' }}>
             <div style={{ display: 'flex', flexWrap: 'nowrap', width: 'max-content' }}>
@@ -170,8 +192,8 @@ const ResponsiveTodoList: React.FC = () => {
 
                         <div style={{ maxHeight: '580px', overflowY: 'auto', padding: '1%', backgroundImage: 'url(ModeleListBG/Colore.jpeg)', backgroundSize: 'cover' }}>
                             {tasks.map((task, taskIndex) => (
-                                <div key={taskIndex} style={{ position: 'relative' }}>
-                                    <button type='button' className='taskForm' onClick={() => handleClickTask(listIndex, taskIndex)} style={{ marginTop: '2%', marginBottom: '2%' }}>
+                                <div key={taskIndex} style={{ position: 'relative'}}>
+                                    <button type='button' className='taskForm' onClick={() => handleClickTask(listIndex, taskIndex)} style={{ marginTop: '2%', marginBottom: '2%', backgroundColor: archivedTasks[listIndex][taskIndex] ? '#DCDCDC' : 'grey'}}>
                                         <p>{task}</p>
 
                                         <div className='labelsTaskForm'>
@@ -197,8 +219,6 @@ const ResponsiveTodoList: React.FC = () => {
                                                 <div className='labels' style={{backgroundColor: 'blue'}}></div>
                                             )}
                                         </div>
-                                        
-
 
                                     </button>
                                     <TaskParametre
@@ -213,6 +233,7 @@ const ResponsiveTodoList: React.FC = () => {
                                         handleDeleteTask={() => handleDeleteTask(listIndex, taskIndex)}
                                         handleToggleLabelsPriority={(labelsPriorityStyle: string) => handleToggleLabelsPriority(listIndex, taskIndex, labelsPriorityStyle)}
                                         handleToggleLabelsStatue={(labelsStatueStyle: string) => handleToggleLabelsStatue(listIndex, taskIndex, labelsStatueStyle)}
+                                        handleArchiveTask={() => handleArchiveTask(listIndex, taskIndex)}
                                     />
                                 </div>
                             ))}
