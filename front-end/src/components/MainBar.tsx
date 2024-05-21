@@ -1,76 +1,72 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import WorkspaceDialog from './WorkspaceDialog';
 import SettingsIcon from '@mui/icons-material/Settings';
+import {Link} from 'react-router-dom';
 
 interface ButtonData {
     text: string;
     icon: JSX.Element;
+    path: string;
 }
 
 interface ButtonTab {
     text: string;
-    link?: string;
+    path: string;
 }
 
 const buttonsData: ButtonData[] = [
-    { text: 'Tableau', icon: <SpaceDashboardIcon /> },
-    { text: 'Paramètres', icon: <SettingsIcon /> }
+    { text: 'Tableau', icon: <SpaceDashboardIcon/>, path:'/'},
+    { text: 'Paramètre', icon: <SettingsIcon/>, path:'/Parametre' }
 ];
 
 const ResponsiveMainBar: React.FC = () => {
     const [open, setOpen] = useState<boolean>(false);
     const [buttonsTab, setButtonsTab] = useState<ButtonTab[]>([
-        { text: 'Exemple tableau', link: '/Exemple'}
+        { text: 'Exemple tableau', path: '/Liste'}
     ]);
     
     const handleClickOpen = () => {
       setOpen(true);
     };
   
-    const handleClose = (title?: string) => {
+    const handleClose = (title: string) => {
         setOpen(false);
         if (title) {
-            setButtonsTab([...buttonsTab, { text: title }]);
+            setButtonsTab([...buttonsTab, { text: title, path:`/path/${title.toLowerCase().replace(/\s+/g, '-')}`}]);
         }
     };
 
     return (
         <div className="left-side">
-            <Box>
-                <p style={{paddingTop: '5px'}}> Vous êtes ici </p>
-                    
-                <Button sx={{ my: 2, color: 'black', fontFamily: 'monospace', display: 'block', textTransform: 'none', width:'100%', border:'solid black', borderRadius:'20px', height:'90px'}}>
-                     A remplir
-                </Button>
-            </Box>
 
-            <hr/>
-
-            <Box sx={{ flexGrow: 1}}>
-                    {buttonsData.map((button, index) => (
-                <Button key={index} sx={{my: 2, color: 'black', fontFamily: 'monospace', display: 'block', width: '100%', border: 'solid black', borderRadius: '20px', height: '90px'}}>
-                    <p>{button.icon} <br/> {button.text}</p>
-                </Button>
+            <div>
+                {buttonsData.map((button, index) => (
+                <Link key={index} to={button.path} style={{textDecoration:'none'}}>
+                    <button type='button' className='buttonBar' key={index}>
+                        <p>{button.icon} <br/> {button.text}</p>
+                    </button>
+                </Link>
             ))}
-            </Box>
+            </div>
 
             <hr/>
 
-            <p style={{paddingTop: '5px'}}> Vous êtes ici </p>
+            <p style={{paddingTop: '5px'}}> Vos tableaux </p>
 
             <Box sx={{ flexGrow: 1 }}>
                 {buttonsTab.map((button, index) => (
-                <Button key={index} sx={{ my: 2, color: 'black', fontFamily: 'monospace', display: 'block', textTransform: 'none', width: '100%', border: 'solid black', borderRadius: '20px', height: '90px' }}>
-                    <p>{button.text}</p>
-                </Button>
+                    <Link key={index} to={button.path} style={{textDecoration:'none'}}>
+                        <button type='button' className='buttonBar' key={index}>
+                            <p>{button.text}</p>
+                        </button>
+                    </Link>
                 ))}
-
-                <Button sx={{ my: 2, color: 'black', fontFamily: 'monospace', display: 'block', textTransform: 'none', width: '100%', border: 'solid black', borderRadius: '20px', height: '90px' }} onClick={handleClickOpen}>
-                    Ajouter un tableau
-                </Button>
+                    
+                <button type='button' className='buttonBar' onClick={handleClickOpen}>
+                    <p>Ajouter un tableau</p>
+                </button>
                 <WorkspaceDialog open={open} handleClose={handleClose} />
             </Box>
         </div>
