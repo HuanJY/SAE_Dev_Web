@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 function LoginPage() {
+  const history = useHistory();
   const [loginName, setLoginName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -71,7 +73,7 @@ function LoginPage() {
     if (response.message) {
       if (response.message.includes("successful")) {
         alert(response.message);
-        // On peut rediriger l'utilisateur ou faire d'autres traitements post-connexion ici
+        history.push('/menu-principal'); // On peut rediriger l'utilisateur ou faire d'autres traitements post-connexion ici
       } else {
         alert(response.message);
       }

@@ -1,4 +1,11 @@
+import { Link, useHistory } from 'react-router-dom';
+
 function ResponsiveHeadBar() {
+    const history = useHistory();  
+
+    const handleLogout = () => {
+        history.push('/');  
+    };
 
     return (
         <div className='headBarForm'>
@@ -7,8 +14,8 @@ function ResponsiveHeadBar() {
             </div>   
 
             <div className="buttonDeco">
-                <button type='button' style={{background:'none', fontSize:'large', padding:'5%'}}>
-                    Deconnexion
+                <button type='button' style={{background:'none', fontSize:'large', padding:'5%'}} onClick={handleLogout}>
+                    Déconnexion
                 </button>
             </div>
         </div>
