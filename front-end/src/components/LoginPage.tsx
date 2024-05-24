@@ -11,7 +11,7 @@ function LoginPage() {
 
   async function loginUser(loginName: string, password: string) {
     try {
-      const response = await fetch('http://localhost:8080/auth/login', {
+      const response = await fetch('api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -38,7 +38,7 @@ function LoginPage() {
 
   async function registerUser(loginName: string, password: string) {
     try {
-      const response = await fetch('http://localhost:8080/auth/register', {
+      const response = await fetch('api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -73,7 +73,7 @@ function LoginPage() {
     if (response.message) {
       if (response.message.includes("successful")) {
         alert(response.message);
-        history.push('/menu-principal'); // On peut rediriger l'utilisateur ou faire d'autres traitements post-connexion ici
+        history.push('/accueil'); // On peut rediriger l'utilisateur ou faire d'autres traitements post-connexion ici
       } else {
         alert(response.message);
       }
