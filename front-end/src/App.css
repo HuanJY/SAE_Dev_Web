@@ -10,16 +10,6 @@ h3 {
   font-family: monospace;
 }
 
-button {
-  background-color: grey;
-  color: white;
-  border: solid black;
-  border-radius: 20px;
-  font-family: monospace;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 textarea {
   background-color: white;
@@ -329,4 +319,169 @@ hr {
   justify-content: center;
   text-align: center;
   align-items: center;
+}
+
+/* Bienvenue.tsx */
+html, body {
+  overflow-x: hidden; /* Empêche le défilement horizontal */
+}
+
+.bienvenue {
+  text-align: center;
+  width: 100vw; 
+  background-color: #d5f4ff;  
+  color: #000;
+}
+
+
+.mainContent {
+  padding: 50px 20px 0 20px;
+}
+
+.mainContent h1 {
+  margin: 50px 0 10px;
+  font-size: 2.5em;
+}
+
+.mainContent p {
+  font-size: 1.2em;
+  font-weight: lighter;
+  margin-bottom: 10px;
+}
+
+.contentFlex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.infoText {
+  width: 29%;
+  text-align: left;
+  font-size: 1.2em;
+  margin-top: 180px;
+  margin-left: 450px;
+  padding: 5px;
+  border: 1px solid #dd99bb;
+  border-radius: 10px;
+  background-color: #FEF8FC;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.imageContainer {
+  width: 45%;
+}
+
+.imageContainer img {
+  width: 100%;
+  height: auto;
+  margin-left: -650px;
+}
+
+.createAccountButton {
+  margin-top: 50px;
+}
+
+.footerImage img {
+  max-width: 30%;
+  height: auto;
+  margin-top: 60px;
+}
+
+
+/*NavBar.tsx */
+.navBar-container {
+  position: fixed;
+  width: 60%;
+  height: 40px;
+  top: 0;
+  background-color: #74D0F1;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: top 0.3s;  
+  z-index: 1000;  
+}
+
+.navBar-hidden {
+  top: -60px;  
+}
+
+
+
+.navBar-logo {
+  flex-grow: 0; 
+  height: 60px;
+  margin-right: auto;  
+}
+
+.navBar-logo img {
+  height: 45px;
+  margin-left: 10px;
+}
+
+.navBar-buttons {
+  flex-grow: 0;  
+  padding-right: 20px;  
+}
+
+.navBar-button {
+  margin-left: 10px;  
+}
+
+/* Connexion.tsx */
+ 
+.connexion-container {
+  display: flex;
+  height: 100vh; /* Utilise toute la hauteur de la vue */
+  width: 100vw; /* Utilise toute la largeur de la vue */
+  margin: 0; /* Enlève tout margin externe */
+  color: #000000;
+}
+
+.connexion-loginSection, .connexion-signupSection {
+  flex: 1;  
+  display: flex;
+  flex-direction: column;  
+  align-items: center;  
+  justify-content: center;  
+  padding: 20px;  
+  overflow: auto;  
+}
+
+.connexion-loginSection {
+  background-color: #f1efdd;  
+}
+
+.connexion-signupSection {
+  background-color: #f7d2d7;  
+}
+
+.connexion-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;  
+  width: 100%;  
+}
+
+.connexion-input {
+  padding: 10px;
+  margin: 10px 0;  
+  width: 100%;  
+}
+
+
+.connexion-button {
+  background-color: #74D0F1;  
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 50%;  
+  margin: 10px auto;  
+
 }
