@@ -31,7 +31,7 @@ CREATE TABLE Tasks(
                       FOREIGN KEY(idList) REFERENCES Lists(idList)
 );
 
-CREATE TABLE TableauxPartagés(
+CREATE TABLE BoardMultiplicity(
                                   idBoard INT,
                                   idUser INT,
                                   PRIMARY KEY(idBoard, idUser),
