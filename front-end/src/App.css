@@ -10,6 +10,16 @@ h3 {
   font-family: monospace;
 }
 
+.buttonForm {
+  background-color: grey;
+  color: white;
+  border: solid black;
+  border-radius: 20px;
+  font-family: monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 textarea {
   background-color: white;
@@ -81,12 +91,12 @@ hr {
   width: 10%;
   height: 100%;
   margin-right: 3%;
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   float: right;
 }
-
 
 /* Forme des barres de navigation et des pages */
 
@@ -110,11 +120,32 @@ hr {
   padding: 20px;
 }
 
-/* Class pour le MenuPrincipale */
+/* Class pour le Board */
 
 .buttonBoard {
   width: calc(33% - 2% - 1px);
   height: 300px;
+}
+
+/* Class pour le SetTitle Board */
+
+.titleDialogForm {
+  width: 20%;
+  height: auto;
+  margin-top: 17%;
+  margin-left: 40%;
+  background-color: bisque;
+  border: solid black;
+  border-radius: 20px;
+  padding:1%;
+}
+
+.textareaTitleTab {
+  width: 98%;
+  height: 20px;
+  text-align: center;
+  font-size: large;
+  border: none;
 }
 
 /* Class pour les Bar */
@@ -411,8 +442,6 @@ html, body {
 .navBar-hidden {
   top: -60px;  
 }
-
-
 
 .navBar-logo {
   flex-grow: 0; 
