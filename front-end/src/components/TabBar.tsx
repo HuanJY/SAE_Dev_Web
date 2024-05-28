@@ -12,18 +12,18 @@ interface ButtonData {
 }
 
 const buttonsData: ButtonData[] = [
-    { text: 'Menu Principale', icon: <MenuIcon />, path: '/'},
+    { text: 'Menu Principale', icon: <MenuIcon />, path: '/Accueil'},
     { text: 'Tableau', icon: <SpaceDashboardIcon />, path: '/Liste'},
     { text: 'Membres', icon: <GroupsIcon />, path: '/Membres' },
-    { text: 'Modèles', icon : <BurstModeIcon/>, path: 'Modele'},
-    { text: 'Paramètre', icon: <SettingsIcon />, path: 'Parametre'}
+    { text: 'Modèles', icon : <BurstModeIcon/>, path: '/Modele'},
+    { text: 'Paramètre', icon: <SettingsIcon />, path: '/Parametre'}
 ];
 
 const ResponsiveBarreTableau: React.FC = () => {    
     return (
         <div className="left-side">
 
-            <button type='button' className='buttonBar'>
+            <button type='button' className='buttonBar buttonForm'>
                 A remplir
             </button>
 
@@ -31,7 +31,7 @@ const ResponsiveBarreTableau: React.FC = () => {
 
             {buttonsData.map((button, index) => (
                 <Link key={index} to={button.path} style={{ textDecoration: 'none'}}>
-                    <button type='button' className="buttonBar" key={index}>
+                    <button type='button' className="buttonBar buttonForm" key={index}>
                         <p>{button.icon} <br/> {button.text}</p>
                     </button>
                 </Link>

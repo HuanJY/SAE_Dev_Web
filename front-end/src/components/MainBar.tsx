@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
-import WorkspaceDialog from './WorkspaceDialog';
 import SettingsIcon from '@mui/icons-material/Settings';
 import {Link} from 'react-router-dom';
 
@@ -44,7 +43,7 @@ const ResponsiveMainBar: React.FC = () => {
             <div>
                 {buttonsData.map((button, index) => (
                 <Link key={index} to={button.path} style={{textDecoration:'none'}}>
-                    <button type='button' className='buttonBar' key={index}>
+                    <button type='button' className='buttonBar buttonForm' key={index}>
                         <p>{button.icon} <br/> {button.text}</p>
                     </button>
                 </Link>
@@ -58,16 +57,11 @@ const ResponsiveMainBar: React.FC = () => {
             <Box sx={{ flexGrow: 1 }}>
                 {buttonsTab.map((button, index) => (
                     <Link key={index} to={button.path} style={{textDecoration:'none'}}>
-                        <button type='button' className='buttonBar' key={index}>
+                        <button type='button' className='buttonBar buttonForm' key={index}>
                             <p>{button.text}</p>
                         </button>
                     </Link>
                 ))}
-                    
-                <button type='button' className='buttonBar' onClick={handleClickOpen}>
-                    <p>Ajouter un tableau</p>
-                </button>
-                <WorkspaceDialog open={open} handleClose={handleClose} />
             </Box>
         </div>
     )
