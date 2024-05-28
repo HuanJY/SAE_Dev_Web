@@ -1,15 +1,9 @@
-import React, { useState, useEffect } from 'react';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import GroupsIcon from '@mui/icons-material/Groups';
 import SettingsIcon from '@mui/icons-material/Settings';
 import BurstModeIcon from '@mui/icons-material/BurstMode';
 import MenuIcon from '@mui/icons-material/Menu';
 import {Link} from 'react-router-dom';
-
-interface UserData {
-    IdUser: number;
-    LoginName: string;
-}
 
 interface ButtonData {
     text: string;
@@ -26,20 +20,8 @@ const buttonsData: ButtonData[] = [
 ];
 
 const ResponsiveBarreTableau: React.FC = () => {
-    const [user, setUser] = useState<UserData | null>(null);
-
-    useEffect(() => {
-        const simulatedUserData: UserData = {
-            IdUser: 1,
-            LoginName: 'JohnDoe',
-        };
-
-        setUser(simulatedUserData);
-    }, []);
-
     return (
         <div className="left-side">
-            <p>{user ? `Bonjour ${user.LoginName}` : 'Vous êtes ici'}</p>
 
             <button type='button' className='buttonBar'>
                 A remplir
@@ -53,7 +35,7 @@ const ResponsiveBarreTableau: React.FC = () => {
                         <p>{button.icon} <br/> {button.text}</p>
                     </button>
                 </Link>
-                ))}
+            ))}
 
             <hr/>
         </div>

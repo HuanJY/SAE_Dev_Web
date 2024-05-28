@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { Link } from 'react-router-dom';
-import WorkspaceDialog from '../components/WorkspaceDialog';
+import SetTitleBoard from '../components/SetTitleBoard';
 import axios from 'axios';
 
 interface ButtonData {
@@ -39,7 +39,7 @@ const ResponsiveMenuPrincipale: React.FC = () => {
 
     const handleClose = async (title: string) => {
         if (!title.trim()) {
-            setError('Le titre du tableau ne peut pas être vide.');
+            setError('Veuillez saisir un titre valide pour le tableau.');
             return;
         }
 
@@ -53,7 +53,7 @@ const ResponsiveMenuPrincipale: React.FC = () => {
             // Ajouter le nouveau tableau à l'état
             const newButton: ButtonData = { text: title, path: `/board/${response.data.idBoard}` };
             setButtonsTab([...buttonsTab, newButton]);
-            setError(''); // Clear the error if the request was successful
+            setError('');
             setOpen(false);
         } catch (error) {
             console.error('Erreur lors de l\'ajout du tableau :', error);
@@ -62,7 +62,7 @@ const ResponsiveMenuPrincipale: React.FC = () => {
 
     const handleCancel = () => {
         setOpen(false);
-        setError(''); // Clear the error when the dialog is closed
+        setError('');
     };
 
     return (
@@ -80,7 +80,7 @@ const ResponsiveMenuPrincipale: React.FC = () => {
                 <button type='button' className='buttonBoard' onClick={handleClickOpen}>
                     <AddBoxIcon /> <p style={{ marginLeft: '1%' }}>Ajouter un tableau</p>
                 </button>
-                <WorkspaceDialog open={open} handleClose={handleClose} handleCancel={handleCancel} error={error} />
+                <SetTitleBoard open={open} handleClose={handleClose} handleCancel={handleCancel} error={error} />
             </div>
         </div>
     );

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
-import WorkspaceDialog from './WorkspaceDialog';
+import WorkspaceDialog from './SetTitleBoard';
 import SettingsIcon from '@mui/icons-material/Settings';
-import {Link} from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 interface ButtonData {
     text: string;
@@ -17,25 +16,32 @@ interface ButtonTab {
 }
 
 const buttonsData: ButtonData[] = [
-    { text: 'Tableau', icon: <SpaceDashboardIcon/>, path:'/'},
-    { text: 'Paramètre', icon: <SettingsIcon/>, path:'/Parametre' }
+    { text: 'Tableau', icon: <SpaceDashboardIcon />, path: '/' },
+    { text: 'Paramètre', icon: <SettingsIcon />, path: '/Parametre' }
 ];
 
 const ResponsiveMainBar: React.FC = () => {
     const [open, setOpen] = useState<boolean>(false);
     const [buttonsTab, setButtonsTab] = useState<ButtonTab[]>([
-        { text: 'Exemple tableau', path: '/Liste'}
+        { text: 'Exemple tableau', path: '/Liste' }
     ]);
-    
+    const [error] = useState<string>('');
+    const history = useHistory(); // Utilisation de useHistory pour obtenir l'objet history
+
     const handleClickOpen = () => {
-      setOpen(true);
+        setOpen(true);
     };
-  
+
     const handleClose = (title: string) => {
         setOpen(false);
         if (title) {
-            setButtonsTab([...buttonsTab, { text: title, path:`/path/${title.toLowerCase().replace(/\s+/g, '-')}`}]);
+            setButtonsTab([...buttonsTab, { text: title, path: `/path/${title.toLowerCase().replace(/\s+/g, '-')}` }]);
+            history.push(`/board/idUser`); // Redirection vers /board/idUser
         }
+    };
+
+    const handleCancel = () => {
+        setOpen(false);
     };
 
     return (
@@ -43,32 +49,37 @@ const ResponsiveMainBar: React.FC = () => {
 
             <div>
                 {buttonsData.map((button, index) => (
-                <Link key={index} to={button.path} style={{textDecoration:'none'}}>
-                    <button type='button' className='buttonBar' key={index}>
-                        <p>{button.icon} <br/> {button.text}</p>
-                    </button>
-                </Link>
-            ))}
+                    <Link key={index} to={button.path} style={{ textDecoration: 'none' }}>
+                        <button type='button' className='buttonBar' key={index}>
+                            <p>{button.icon} <br /> {button.text}</p>
+                        </button>
+                    </Link>
+                ))}
             </div>
 
-            <hr/>
+            <hr />
 
-            <p style={{paddingTop: '5px'}}> Vos tableaux </p>
+            <p style={{ paddingTop: '5px' }}> Vos tableaux </p>
 
-            <Box sx={{ flexGrow: 1 }}>
+            <div>
                 {buttonsTab.map((button, index) => (
-                    <Link key={index} to={button.path} style={{textDecoration:'none'}}>
+                    <Link key={index} to={button.path} style={{ textDecoration: 'none' }}>
                         <button type='button' className='buttonBar' key={index}>
                             <p>{button.text}</p>
                         </button>
                     </Link>
                 ))}
-                    
+
                 <button type='button' className='buttonBar' onClick={handleClickOpen}>
                     <p>Ajouter un tableau</p>
                 </button>
-                <WorkspaceDialog open={open} handleClose={handleClose} />
-            </Box>
+                <WorkspaceDialog
+                    open={open}
+                    handleClose={handleClose}
+                    handleCancel={handleCancel}
+                    error={error}
+                />
+            </div>
         </div>
     )
 };
