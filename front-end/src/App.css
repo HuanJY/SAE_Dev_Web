@@ -479,7 +479,7 @@ html, body {
  
 form {
   width: 100%;
-  max-width: 360px; /* largeur maximale du formulaire */
+  max-width: 360px;  
   background: #fff;
   padding: 20px;
   box-shadow: 0 0 15px rgba(0,0,0,0.2);  
@@ -498,34 +498,39 @@ form {
 .input-group input {
   width: 90%;
   padding: 8px;
-  border: 1px solid #ccc; /* bordure légère pour les inputs */
-  border-radius: 4px; /* bordures légèrement arrondies pour les inputs */
+  border: 1px solid #ccc;  
+  border-radius: 4px;  
 }
 
-/* Styles spécifiques aux boutons */
+
+ 
+.button-group {
+  display: flex;  
+  justify-content: space-between; 
+}
+ 
 button {
-  width: 100%;
+  flex-grow: 1;  
   padding: 10px;
   border: none;
-  background-color: #8BDCFF; /* couleur de fond des boutons */
+  background-color: #8BDCFF;  
   color: white;
   font-size: 16px;
   cursor: pointer;
-  border-radius: 4px; /* bordures arrondies */
-  margin-top: 10px; /* espace au-dessus du bouton */
+  border-radius: 4px;  
+  margin: 5px;  
 }
 
 button:hover {
-  background-color: #4a54e1
-  ; /* changement de couleur au survol */
+  background-color: #4a54e1;  
 }
 
-/* Style pour le lien mot de passe oublié */
+ 
 p a {
   color: #5c67f2;
   text-decoration: none;
 }
 
 p a:hover {
-  text-decoration: underline; /* soulignement au survol */
+  text-decoration: underline;  
 }
