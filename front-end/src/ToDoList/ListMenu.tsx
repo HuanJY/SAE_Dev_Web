@@ -2,7 +2,6 @@ import React from 'react';
 import Menu from '@mui/material/Menu';
 import AddIcon from '@mui/icons-material/Add';
 import ClearAllIcon from '@mui/icons-material/ClearAll';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import ClearIcon from '@mui/icons-material/Clear';
 import CheckIcon from '@mui/icons-material/Check';
 
@@ -10,7 +9,6 @@ interface ListMenuProps {
     anchorEl: HTMLElement | null;
     handleClose: () => void;
     handleAddTask: () => void;
-    handleToggleVisibility: () => void;
     handleDeleteAllTasks: () => void;
     handleDeleteList: () => void;
 }
@@ -21,12 +19,11 @@ interface ButtonMenu {
     action: () => void;
 }
 
-const ResponsiveListMenu: React.FC<ListMenuProps> = ({ anchorEl, handleClose, handleAddTask, handleToggleVisibility, handleDeleteAllTasks, handleDeleteList }) => {
+const ResponsiveListMenu: React.FC<ListMenuProps> = ({ anchorEl, handleClose, handleAddTask, handleDeleteAllTasks, handleDeleteList }) => {
    
     const buttonMenu: ButtonMenu[] = [
         {text: 'Ajouter une tâche', icon: <AddIcon/>, action: handleAddTask},
-        {text: 'Supprimmer toutes les tâches', icon: <ClearAllIcon/>, action: handleDeleteAllTasks},
-        {text: 'Suivre', icon: <VisibilityIcon/>, action: handleToggleVisibility},
+        {text: 'Supprimer toutes les tâches', icon: <ClearAllIcon/>, action: handleDeleteAllTasks},
         {text: 'Supprimer cette liste', icon: <ClearIcon/>, action: handleDeleteList},
         {text: 'Archiver cette liste', icon: <CheckIcon/>, action: handleClose}
     ];

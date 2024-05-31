@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/task")
+@RequestMapping(path = "/task")
 public class TaskController {
 
     private final TaskService taskService;
@@ -20,7 +20,7 @@ public class TaskController {
     }
 
 
-    @GetMapping(path = "/{idList}")
+    @PostMapping(path = "/{idList}")
     public List<Task> findAllTaskList(@PathVariable Integer idList) {
         return taskService.findallTaskFromList(idList);
     }
@@ -30,11 +30,11 @@ public class TaskController {
         taskService.addTask(newTask);
     }
 
-    @GetMapping(path = "/{idTask}/dropTask")
+    @DeleteMapping(path = "/{idTask}/dropTask")
     public void dropTask(@PathVariable int idTask) {
         taskService.dropTask(idTask);
     }
-    @GetMapping(path = "/{idList}/dropAllTaskByIdList")
+    @DeleteMapping(path = "/{idList}/dropAllTaskByIdList")
     public void dropAllTaskByIdList(@PathVariable int idList){
         taskService.dropAllTaskByIdList(idList);
     }

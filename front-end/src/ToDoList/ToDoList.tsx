@@ -4,32 +4,78 @@ import TuneIcon from '@mui/icons-material/Tune';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ListMenu from './ListMenu';
 import TaskParametre from './TaskParametre';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
+const api = axios.create({
+  baseURL: 'http://localhost:5173/api',
+  withCredentials: true,
+});
+
+interface ListAzu {
+    idList: number;
+    listName: string;
+    idBoard: number;
+    tasks: Task[];
+}
+
+interface Task {
+    idTask: number;
+    taskName: string;
+    taskDescription: string;
+    idList: number;
+}
 
 const ResponsiveTodoList: React.FC = () => {
+    const { idBoard } = useParams<{ idBoard: string }>(); // Utilisation de useParams pour obtenir l'ID du tableau
     const [anchorEls, setAnchorEls] = useState<(HTMLElement | null)[]>([]);
-    const [lists, setLists] = useState<string[][]>(() => {
-        const storedLists = localStorage.getItem('todoLists');
-        return storedLists ? JSON.parse(storedLists) : [[]];
-    });
+    const [lists, setLists] = useState<ListAzu[]>([]);
     const [visibility, setVisibility] = useState<boolean[]>([]);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [selectedListIndex, setSelectedListIndex] = useState<number | null>(null);
     const [selectedTaskIndex, setSelectedTaskIndex] = useState<number | null>(null);
-    const [labelsPriority, setLabelsPriority] = useState<string[][]>(() => {
-        const storedLabelsPriority = localStorage.getItem('taskLabelsPriority');
-        return storedLabelsPriority ? JSON.parse(storedLabelsPriority) : lists.map(() => []);
-    });
-    const [labelsStatue, setLabelsStatue] = useState<string[][]>(() => {
-        const storedLabelsStatue = localStorage.getItem('taskLabelsStatue');
-        return storedLabelsStatue ? JSON.parse(storedLabelsStatue) : lists.map(() => []);
-    });
-    
+
+    const fetchLists = async () => {
+        try {
+            const response = await api.post(`/list/${idBoard}`);
+            const listsData = response.data;
+
+            // Récupérer les tâches pour chaque liste
+            const listsWithTasks = await Promise.all(listsData.map(async (list: ListAzu) => {
+                const tasksResponse = await api.post(`/task/${list.idList}`);
+                return {
+                    ...list,
+                    tasks: tasksResponse.data
+                };
+            }));
+
+            const visibility = listsWithTasks.map(() => true); // Initialisez comme vous le souhaitez
+            setLists(listsWithTasks);
+            setVisibility(visibility);
+            setAnchorEls(new Array(listsWithTasks.length).fill(null));
+        } catch (error) {
+            console.error('Erreur lors de la récupération des listes et des tâches :', error);
+        }
+    };
 
     useEffect(() => {
-        localStorage.setItem('todoLists', JSON.stringify(lists));
-        localStorage.setItem('taskLabelsPriority', JSON.stringify(labelsPriority));
-        localStorage.setItem('taskLabelsStatue', JSON.stringify(labelsStatue));
-    }, [lists, labelsPriority, labelsStatue]);
+        fetchLists();
+    }, [idBoard]);
+
+    const handleDescriptionChange = async (listIndex: number, taskIndex: number, newDescription: string) => {
+        const taskId = lists[listIndex].tasks[taskIndex].idTask;
+
+        try {
+            await api.post(`/task/${taskId}/modifyTask`, {
+                taskName: lists[listIndex].tasks[taskIndex].taskName,
+                taskDescription: newDescription,
+            });
+
+            fetchLists();
+        } catch (error) {
+            console.error('Erreur lors de la modification de la description de la tâche :', error);
+        }
+    };
 
     const handleClickTask = (listIndex: number, taskIndex: number) => {
         setSelectedListIndex(listIndex);
@@ -49,130 +95,96 @@ const ResponsiveTodoList: React.FC = () => {
         setAnchorEls(updatedAnchorEls);
     };
 
-    const handleAddList = () => {
-        const newLists = [...lists, ['Nouvelle tâche']];
-        const newAnchorEls = [...anchorEls, null];
-        const newVisibility = [...visibility, true];
-        const newLabelsPriority = [...labelsPriority, []];
-        const newLabelsStatue = [...labelsStatue, []];
-        const newArchivedTasks = [...archivedTasks, [false]];
-        setLists(newLists);
-        setAnchorEls(newAnchorEls);
-        setVisibility(newVisibility);
-        setLabelsPriority(newLabelsPriority);
-        setLabelsStatue(newLabelsStatue);
-        setArchivedTasks(newArchivedTasks);
-    };
-
-    const handleAddTask = (listIndex: number) => {
-        const updatedLists = [...lists];
-        updatedLists[listIndex].push('Nouvelle tâche');
-        const updatedLabelsPriority = [...labelsPriority];
-        const updatedLabelsStatue = [...labelsStatue];
-        const updatedArchivedTasks = [...archivedTasks];
-        updatedLabelsPriority[listIndex].push('');
-        updatedLabelsStatue[listIndex].push('');
-        updatedArchivedTasks[listIndex].push(false);
-        setLists(updatedLists);
-        setLabelsPriority(updatedLabelsPriority);
-        setLabelsStatue(updatedLabelsStatue);
-        setArchivedTasks(updatedArchivedTasks);
-    };
-
-    const handleToggleVisibility = (listIndex: number) => {
-        const updatedVisibility = [...visibility];
-        updatedVisibility[listIndex] = !updatedVisibility[listIndex];
-        setVisibility(updatedVisibility);
-    };
-
-    const handleDeleteList = (listIndex: number) => {
-        const updatedLists = lists.filter((_, index) => index !== listIndex);
-        const updatedLabelsPriority = labelsPriority.filter((_, index) => index !== listIndex);
-        const updatedLabelsStatue = labelsStatue.filter((_, index) => index !== listIndex);
-        const updatedArchivedTasks = archivedTasks.filter((_, index) => index !== listIndex);
-        setLists(updatedLists);
-        setLabelsPriority(updatedLabelsPriority);
-        setLabelsStatue(updatedLabelsStatue);
-        setArchivedTasks(updatedArchivedTasks);
-        handleClose(listIndex);
-    };
-
-    const handleDeleteTask = (listIndex: number, taskIndex: number) => {
-        const updatedLists = [...lists];
-        updatedLists[listIndex].splice(taskIndex, 1);
-        const updatedLabelsPriority = [...labelsPriority];
-        const updatedLabelsStatue = [...labelsStatue];
-        updatedLabelsPriority[listIndex].splice(taskIndex, 1);
-        updatedLabelsStatue[listIndex].splice(taskIndex, 1);
-        const updatedArchivedTasks = [...archivedTasks];
-        updatedArchivedTasks[listIndex].splice(taskIndex, 1); // Supprimer l'entrée correspondante dans archivedTasks
-        setLists(updatedLists);
-        setLabelsPriority(updatedLabelsPriority);
-        setLabelsStatue(updatedLabelsStatue);
-        setArchivedTasks(updatedArchivedTasks); // Mettre à jour l'état archivedTasks
-        setIsModalOpen(false);
-    };
-
-    const handleDeleteAllTasks = (listIndex: number) => {
-        const updatedLists = [...lists];
-        updatedLists[listIndex] = [];
-        const updatedLabelsPriority = [...labelsPriority];
-        const updatedLabelsStatue = [...labelsStatue];
-        updatedLabelsPriority[listIndex] = [];
-        updatedLabelsStatue[listIndex] = [];
-        const updatedArchivedTasks = [...archivedTasks];
-        updatedArchivedTasks[listIndex] = []; // Supprimer toutes les entrées correspondantes dans archivedTasks
-        setLists(updatedLists);
-        setLabelsPriority(updatedLabelsPriority);
-        setLabelsStatue(updatedLabelsStatue);
-        setArchivedTasks(updatedArchivedTasks); // Mettre à jour l'état archivedTasks
-        handleClose(listIndex);
-    };
-
-    const handleTitleChange = (listIndex: number, taskIndex: number, newTitle: string) => {
-        const updatedLists = [...lists];
-        updatedLists[listIndex][taskIndex] = newTitle;
-        setLists(updatedLists);
-        localStorage.setItem(`taskTitle-${listIndex}-${taskIndex}`, newTitle);
-    };
-
-    const handleToggleLabelsPriority = (listIndex: number, taskIndex: number, labelsPriorityStyle: string) => {
-        const updatedLabelsPriority = [...labelsPriority];
-        if (labelsPriorityStyle === 'Retirer les étiquettes') {
-            updatedLabelsPriority[listIndex][taskIndex] = '';
-        } else {
-            updatedLabelsPriority[listIndex][taskIndex] = labelsPriorityStyle;
+    const handleAddList = async () => {
+        try {
+            const newList = {
+                listName: 'Nouvelle liste',
+                idBoard: idBoard ? parseInt(idBoard) : null
+            };
+    
+            await api.post(`/list/addList`, newList);
+    
+            fetchLists();
+        } catch (error) {
+            console.error('Erreur lors de l\'ajout de la liste :', error);
         }
-        setLabelsPriority(updatedLabelsPriority);
     };
 
-    const handleToggleLabelsStatue = (listIndex: number, taskIndex: number, labelsStatueStyle: string) => {
-        const updatedLabelsStatue = [...labelsStatue];
-        if (labelsStatueStyle === 'Retirer les étiquettes') {
-            updatedLabelsStatue[listIndex][taskIndex] = '';
-        } else {
-            updatedLabelsStatue[listIndex][taskIndex] = labelsStatueStyle;
+    const handleAddTask = async (listIndex: number) => {
+        try {
+            const newTask = {
+                taskName: 'Nouvelle tâche',
+                taskDescription: '',
+                idList: lists[listIndex].idList
+            };
+    
+            await api.post(`/task/addTask`, newTask);
+    
+            fetchLists();
+        } catch (error) {
+            console.error('Erreur lors de l\'ajout de la tâche :', error);
         }
-        setLabelsStatue(updatedLabelsStatue);
     };
 
-    const [archivedTasks, setArchivedTasks] = useState<boolean[][]>(() => lists.map(() => []));
+    const handleDeleteList = async (listIndex: number) => {
+        const listId = lists[listIndex].idList;
+    
+        try {
+            await api.delete(`/list/dropList/${listId}`);
+    
+            fetchLists();
+        } catch (error) {
+            console.error('Erreur lors de la suppression de la liste :', error);
+        }
+    };
 
-    const handleArchiveTask = (listIndex: number, taskIndex: number) => {
-        const updatedArchivedTasks = [...archivedTasks];
-        updatedArchivedTasks[listIndex][taskIndex] = !updatedArchivedTasks[listIndex][taskIndex];
-        setArchivedTasks(updatedArchivedTasks);
-        setIsModalOpen(false);
+    const handleDeleteTask = async (listIndex: number, taskIndex: number) => {
+        const taskId = lists[listIndex].tasks[taskIndex].idTask;
+    
+        try {
+            await api.delete(`/task/${taskId}/dropTask`);
+    
+            fetchLists();
+        } catch (error) {
+            console.error('Erreur lors de la suppression de la tâche :', error);
+        }
+    };
+
+    const handleDeleteAllTasks = async (listIndex: number) => {
+        const listId = lists[listIndex].idList;
+    
+        try {
+            await api.delete(`/task/${listId}/dropAllTaskByIdList`);
+    
+            fetchLists();
+        } catch (error) {
+            console.error('Erreur lors de la suppression de toutes les tâches :', error);
+        }
+    };
+
+    const handleTitleChangeTask = async (listIndex: number, taskIndex: number, newTitle: string) => {
+        const taskId = lists[listIndex].tasks[taskIndex].idTask;
+    
+        try {
+            await api.post(`/task/${taskId}/modifyTask`, {
+                taskName: newTitle,
+                taskDescription: lists[listIndex].tasks[taskIndex].taskDescription,
+            });
+    
+            fetchLists();
+        } catch (error) {
+            console.error('Erreur lors de la modification de la tâche :', error);
+        }
     };
 
     return (
         <div className="right-side" style={{ overflowX: 'auto' }}>
             <div style={{ display: 'flex', flexWrap: 'nowrap', width: 'max-content' }}>
-                {lists.map((tasks, listIndex) => (
-                    <div className='toDoListForm' key={listIndex}>
+                {lists.map((list, listIndex) => (
+                    <div className='toDoListForm' key={list.idList}>
                         <div className='headerToDoList'>
                             <div style={{ width: '73%', color: 'white', textAlign: 'center' }}>
-                                <p>Nouvelle Liste</p>
+                                <p>{list.listName}</p>
                             </div>
                             <div className='outline' style={{ width: '10%', marginRight: '2%', opacity: visibility[listIndex] ? 0 : 1 }}>
                                 <VisibilityIcon />
@@ -184,42 +196,17 @@ const ResponsiveTodoList: React.FC = () => {
                                 anchorEl={anchorEls[listIndex]}
                                 handleClose={() => handleClose(listIndex)}
                                 handleAddTask={() => handleAddTask(listIndex)}
-                                handleToggleVisibility={() => handleToggleVisibility(listIndex)}
                                 handleDeleteAllTasks={() => handleDeleteAllTasks(listIndex)}
                                 handleDeleteList={() => handleDeleteList(listIndex)}
                             />
                         </div>
-
+    
                         <div style={{ maxHeight: '580px', overflowY: 'auto', padding: '1%', backgroundImage: 'url(ModeleListBG/Colore.jpeg)', backgroundSize: 'cover' }}>
-                            {tasks.map((task, taskIndex) => (
-                                <div key={taskIndex} style={{ position: 'relative'}}>
-                                    <button type='button' className='taskForm buttonForm' onClick={() => handleClickTask(listIndex, taskIndex)} style={{ marginTop: '2%', marginBottom: '2%', backgroundColor: archivedTasks[listIndex][taskIndex] ? '#DCDCDC' : 'grey'}}>
-                                        <p>{task}</p>
-
-                                        <div className='labelsTaskForm'>
-                                            {labelsPriority[listIndex][taskIndex] === 'Principale' && (
-                                                <div className='labels' style={{backgroundColor: 'red'}}></div>
-                                            )}
-
-                                            {labelsPriority[listIndex][taskIndex] === 'Secondaire' && (
-                                                <div className='labels' style={{backgroundColor: 'orange'}}></div>
-                                            )}
-
-                                            {labelsPriority[listIndex][taskIndex] === 'Tertiaire' && (
-                                                <div className='labels' style={{backgroundColor: 'yellow'}}></div>
-                                            )}
-                                        </div>
-
-                                        <div className='labelsTaskForm' style={{marginTop:'20px'}}>
-                                            {labelsStatue[listIndex][taskIndex] === 'Urgent' && (
-                                            <div className='labels' style={{backgroundColor: 'green'}}></div>
-                                            )}
-
-                                            {labelsStatue[listIndex][taskIndex] === 'Très Urgent' && (
-                                                <div className='labels' style={{backgroundColor: 'blue'}}></div>
-                                            )}
-                                        </div>
-
+                            {list.tasks.map((task, taskIndex) => (
+                                <div key={task.idTask} style={{ position: 'relative' }}>
+                                    <button type='button' className='taskForm buttonForm' onClick={() => handleClickTask(listIndex, taskIndex)} style={{ marginTop: '2%', marginBottom: '2%' }}>
+                                        <p>{task.taskName}</p>
+    
                                     </button>
                                     <TaskParametre
                                         open={isModalOpen && selectedListIndex === listIndex && selectedTaskIndex === taskIndex}
@@ -228,17 +215,16 @@ const ResponsiveTodoList: React.FC = () => {
                                             setSelectedListIndex(null);
                                             setSelectedTaskIndex(null);
                                         }}
-                                        handleTitleChange={(newTitle: string) => handleTitleChange(listIndex, taskIndex, newTitle)}
-                                        taskTitle={task}
+                                        handleTitleChange={(newTitle: string) => handleTitleChangeTask(listIndex, taskIndex, newTitle)}
+                                        handleDescriptionChange={(newDescription: string) => handleDescriptionChange(listIndex, taskIndex, newDescription)}
+                                        taskTitle={task.taskName}
+                                        taskDescription={task.taskDescription}
                                         handleDeleteTask={() => handleDeleteTask(listIndex, taskIndex)}
-                                        handleToggleLabelsPriority={(labelsPriorityStyle: string) => handleToggleLabelsPriority(listIndex, taskIndex, labelsPriorityStyle)}
-                                        handleToggleLabelsStatue={(labelsStatueStyle: string) => handleToggleLabelsStatue(listIndex, taskIndex, labelsStatueStyle)}
-                                        handleArchiveTask={() => handleArchiveTask(listIndex, taskIndex)}
                                     />
                                 </div>
                             ))}
                         </div>
-
+    
                         <div className='footerToDoList'>
                             <button type='button' className='buttonForm' onClick={() => handleAddTask(listIndex)} style={{ width: '83%', marginRight: '2%' }}>
                                 <AddIcon /> <p>Ajouter une tâche</p>
@@ -249,13 +235,13 @@ const ResponsiveTodoList: React.FC = () => {
                         </div>
                     </div>
                 ))}
-
+    
                 <button type='button' className='buttonForm' onClick={handleAddList} style={{ width: '400px', height: '40px' }}>
                     <AddIcon /> <p>Ajouter une liste</p>
                 </button>
             </div>
         </div>
     );
-};
+}
 
 export default ResponsiveTodoList;

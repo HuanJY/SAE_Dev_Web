@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Modal from '@mui/material/Modal';
 import Menu from '@mui/material/Menu';
 
@@ -6,24 +6,13 @@ interface ListParametreProps {
     open: boolean;
     handleClose: () => void;
     handleTitleChange: (newTitle: string) => void;
+    handleDescriptionChange: (newDescription: string) => void;
     taskTitle: string;
+    taskDescription: string;
     handleDeleteTask: () => void;
-    handleToggleLabelsPriority: (LabelsPriorityStyle: string) => void; // Modifier la signature pour accepter une string en argument
-    handleToggleLabelsStatue: (LabelsStatueStyle: string) => void; // Modifier la signature pour accepter une string en argument
-    handleArchiveTask: () => void;
 }
 
 interface ButtonAction {
-    text: string;
-    action?: () => void;
-}
-
-interface LabelsPriority {
-    text: string;
-    action?: () => void;
-}
-
-interface LabelsStatue {
     text: string;
     action?: () => void;
 }
@@ -32,28 +21,13 @@ const ResponsiveTaskParametre: React.FC<ListParametreProps> = ({
     open,
     handleClose,
     handleTitleChange,
+    handleDescriptionChange,
     taskTitle,
+    taskDescription,
     handleDeleteTask,
-    handleToggleLabelsPriority,
-    handleToggleLabelsStatue,
-    handleArchiveTask
 }) => {
-    const [title, setTitle] = useState<string>(() => taskTitle || '');
-    const [description, setDescription] = useState<string>(() => {
-        const storedDescription = localStorage.getItem('taskDescription');
-        return storedDescription || '';
-    });
-
-    const [selectedLabelsPriority, setSelectedLabelsPriority] = useState<string>(''); // New state for selected label priority
-    const [selectedLabelsPriorityColor, setSelectedLabelsPriorityColor] = useState<string>(''); // New state for selected label priority color
-
-    const [selectedLabelsStatue, setSelectedLabelsStatue] = useState<string>(''); // New state for selected label statue
-    const [selectedLabelsStatueColor, setSelectedLabelsStatueColor] = useState<string>(''); // New state for selected label statue color
-
-    useEffect(() => {
-        localStorage.setItem('taskDescription', description);
-        localStorage.setItem('taskTitle', title);
-    }, [description, title]);
+    const [title, setTitle] = useState<string>(taskTitle);
+    const [description, setDescription] = useState<string>(taskDescription);
 
     const [isEditableTitle, setIsEditableTitle] = useState<boolean>(false);
     const [isEditableDescription, setIsEditableDescription] = useState<boolean>(false);
@@ -93,6 +67,7 @@ const ResponsiveTaskParametre: React.FC<ListParametreProps> = ({
     const handleApplyChanges = () => {
         console.log('Applying changes...');
         handleTitleChange(title);
+        handleDescriptionChange(description);
         handleClose();
     };
 
@@ -102,58 +77,9 @@ const ResponsiveTaskParametre: React.FC<ListParametreProps> = ({
         setAnchorEl(event.currentTarget);
     };
 
-    const handleCloseLabelMenu = () => {
-        setAnchorEl(null);
-    };
-
-    const LabelsPriorityStyles: { [key: string]: string } = {
-        'Principale': 'red',
-        'Secondaire': 'orange',
-        'Tertiaire': '#bdba00',
-    };
-
-    const labelsStatueStyles: { [key: string]: string } = {
-        'Très Urgent': 'blue',
-        'Urgent': 'green',
-        'Retirer les étiquettes': ''
-    };
-
-    const handleSelectLabelsPriority = (LabelsPriorityStyle: string) => {
-        handleToggleLabelsPriority(LabelsPriorityStyle);
-        setSelectedLabelsPriority(LabelsPriorityStyle);
-        setSelectedLabelsPriorityColor(LabelsPriorityStyles[LabelsPriorityStyle]);
-    };
-    
-    const handleSelectLabelsStatue = (LabelsStatueStyle: string) => {
-        if (LabelsStatueStyle === 'Retirer les étiquettes') {
-            setSelectedLabelsPriority('');
-            setSelectedLabelsStatue('');
-            setSelectedLabelsPriorityColor('');
-            setSelectedLabelsStatueColor('');
-            handleToggleLabelsPriority('Retirer les étiquettes');
-            handleToggleLabelsStatue('Retirer les étiquettes');
-        } else {
-            handleToggleLabelsStatue(LabelsStatueStyle);
-            setSelectedLabelsStatue(LabelsStatueStyle);
-            setSelectedLabelsStatueColor(labelsStatueStyles[LabelsStatueStyle]);
-        }
-    };
-
     const buttonAction: ButtonAction[] = [
         { text: 'Déplacer' },
         { text: 'Supprimer', action: handleDeleteTask},
-        { text: 'Archiver', action: handleArchiveTask},
-    ];
-
-    const LabelsPriority: LabelsPriority[] = [
-        { text: 'Principale', action: () => handleSelectLabelsPriority('Principale') },
-        { text: 'Secondaire', action: () => handleSelectLabelsPriority('Secondaire') },
-        { text: 'Tertiaire', action: () => handleSelectLabelsPriority('Tertiaire') },
-    ];
-    
-    const labelsStatue: LabelsStatue[] = [
-        { text: 'Très Urgent', action: () => handleSelectLabelsStatue('Très Urgent') },
-        { text: 'Urgent', action: () => handleSelectLabelsStatue('Urgent') },
     ];
 
     return (
@@ -211,20 +137,6 @@ const ResponsiveTaskParametre: React.FC<ListParametreProps> = ({
                     <button type='button' className='buttonApplyTaskParametre buttonForm' onClick={handleApplyChanges} style={{ float: 'right' }}>
                         Appliquer les modifications
                     </button>
-
-                    <div className='labelRegroup' style={{ display: 'flex', gap: '10px' }}>
-                        {selectedLabelsPriority && (
-                            <p className='labelTask' style={{ backgroundColor: selectedLabelsPriorityColor }}>
-                                {selectedLabelsPriority}
-                            </p>
-                        )}
-                        
-                        {selectedLabelsStatue && (
-                            <p className='labelTask' style={{ backgroundColor: selectedLabelsStatueColor }}>
-                                {selectedLabelsStatue}
-                            </p>
-                        )}
-                    </div>
                     
 
                 </div>
@@ -244,35 +156,7 @@ const ResponsiveTaskParametre: React.FC<ListParametreProps> = ({
                         Etiquettes
                     </button>
 
-                    <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleCloseLabelMenu} anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-                        PaperProps={{ style: { width: '240px', height: 'auto', backgroundColor: 'bisque', border: 'solid black', borderRadius: '20px', marginTop: '10px', textAlign:'center', paddingLeft:'10px', paddingRight:'10px' }}}>
-
-                        <p > Priorité </p>
-
-                        {LabelsPriority.map((button, index) => (
-                            <button type="button" key={index} className='labelParametre buttonForm' onClick={button.action}>
-                                {button.text}
-                            </button>
-                        ))}
-                        
-                        <hr className='sepButton'/>
-
-                        <p > Priorité </p>
-
-                        {labelsStatue.map((button, index) => (
-                            <button type="button" key={index} className='labelParametre buttonForm' onClick={button.action}>
-                                {button.text}
-                            </button>
-                        ))}
-
-                        <hr className='sepButton'/>
-
-                        <button type="button" className='labelParametre buttonForm' onClick={() => handleSelectLabelsStatue('Retirer les étiquettes')} style={{paddingBottom:'10px'}}>
-                            Retirer les étiquettes
-                        </button>
-
-                    </Menu>
-
+                
                     <button type='button' className='buttonRightTaskParametre buttonForm'>
                         Checklist
                     </button>

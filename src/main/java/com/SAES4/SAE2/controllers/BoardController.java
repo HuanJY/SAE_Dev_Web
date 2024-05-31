@@ -1,6 +1,7 @@
 package com.SAES4.SAE2.controllers;
 
 import com.SAES4.SAE2.models.board.Board;
+import com.SAES4.SAE2.models.user.User;
 import com.SAES4.SAE2.services.board.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,18 +24,19 @@ public class BoardController {
         return boardService.findAllBoards();
     }
 
-    @GetMapping(path = "/{userID}")
-    public List<Board> findUserBoard(@PathVariable Integer userID) {
-        return boardService.findUserBoard(userID);
+    @PostMapping("/user")
+    public List<Board> findUserBoard(User user) {
+        return boardService.findUserBoard(user.getIdUser());
     }
 
-    @PostMapping(path = "/addBoard")
-    public void addUserBoard(@RequestBody Board newBoard) {
-        boardService.addUserBoard(newBoard);
+    @PostMapping("/addBoard")
+    public void addUserBoard(@RequestBody Board newBoard, User user) {
+        newBoard.setIdUser(user.getIdUser());
+        boardService.addUserBoard(newBoard, user.getLoginName());
     }
 
-    @GetMapping(path = "/{idBoard}/dropBoard")
-    public void dropBoard(@PathVariable int idBoard){
+    @DeleteMapping("/{idBoard}/dropBoard")
+    public void dropBoard(@PathVariable int idBoard) {
         boardService.dropBoard(idBoard);
     }
 }

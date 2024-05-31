@@ -20,7 +20,7 @@ public class ListController {
         this.listService = listService;
     }
 
-    @GetMapping(path = "/{idBoard}")
+    @PostMapping(path = "/{idBoard}")
     public List<ListAzu> findBoardList(@PathVariable Integer idBoard) {
         return listService.findallList(idBoard);
     }
@@ -30,15 +30,15 @@ public class ListController {
         listService.addList(newList);
     }
 
-    @GetMapping(path = "/dropList/{idList}")
+    @DeleteMapping(path = "/dropList/{idList}")
     public void dropList(@PathVariable int idList) {
         listService.dropList(idList);
     }
-    @GetMapping(path= "/dropAllListByIdBoard/{idBoard}")
+    @DeleteMapping(path= "/dropAllListByIdBoard/{idBoard}")
     public void dropAllListByIdBoard(@PathVariable int idBoard){
         listService.dropAllListByIdBoard(idBoard);
     }
-    @PostMapping(path = "{idList}/modifyList")
+    @PostMapping(path = "/{idList}/modifyList")
     public void modifyList(@PathVariable int idList, @RequestBody EditListRequest editListRequest){
         listService.modifyList(idList, editListRequest);
     }

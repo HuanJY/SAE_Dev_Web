@@ -14,12 +14,13 @@ const ResponsiveBoard: React.FC = () => {
     const [error, setError] = useState<string>('');
     const [buttonsTab, setButtonsTab] = useState<ButtonData[]>([]);
 
-    const idUser = 1; // Pour le test (à enlever)
-
     useEffect(() => {
         const fetchBoards = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/board/${idUser}`);
+                const response = await axios.post(`api/board/user`, {
+                }, {
+                    withCredentials: true // Important pour inclure les cookies de session
+                });
                 const boards = response.data.map((board: any) => ({
                     text: board.boardName,
                     path: `/board/${board.idBoard}`
@@ -44,9 +45,10 @@ const ResponsiveBoard: React.FC = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8080/api/board/addBoard', {
-                boardName: title,
-                idUser: idUser
+            const response = await axios.post('api/board/addBoard', {
+                boardName: title
+            }, {
+                withCredentials: true // Important pour inclure les cookies de session
             });
 
             console.log('Création du tableau réussi');

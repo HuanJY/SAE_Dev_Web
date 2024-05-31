@@ -1,46 +1,45 @@
 package com.SAES4.SAE2.services.board;
 
-
-import com.SAES4.SAE2.models.list.ListAzu;
-import com.SAES4.SAE2.repositories.BoardRepositories;
 import com.SAES4.SAE2.models.board.Board;
+import com.SAES4.SAE2.repositories.BoardRepositories;
+import com.SAES4.SAE2.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-
-// Allows you to reseve data from DB
 @Service
 public class BoardService {
     private final BoardRepositories boardRepositories;
+    private final UserRepository userRepository;
 
     @Autowired
-    public BoardService(BoardRepositories boardRepositories) {
+    public BoardService(BoardRepositories boardRepositories, UserRepository userRepository) {
         this.boardRepositories = boardRepositories;
+        this.userRepository = userRepository;
     }
 
     public List<Board> findAllBoards() {
         return (List<Board>) boardRepositories.findAll();
     }
 
-    public List<Board> findUserBoard(Integer userID) {
-
-        return boardRepositories.findByIdUser(userID);
+    public List<Board> findUserBoardByLoginName(String loginName) {
+        int userId = userRepository.findByLoginName(loginName).getIdUser();
+        return boardRepositories.findByIdUser(userId);
     }
 
-    public void addUserBoard(Board newBoard) {
-        Board boardInsert = new Board();
-
-        boardInsert.setIdUser(newBoard.getIdUser());
-        boardInsert.setBoardName(newBoard.getBoardName());
-
-        boardRepositories.save(boardInsert);
+    public void addUserBoard(Board newBoard, String loginName) {
+        int userId = userRepository.findByLoginName(loginName).getIdUser();
+        newBoard.setIdUser(userId);
+        boardRepositories.save(newBoard);
     }
-    public void dropBoard(int idBoard){
+
+    public void dropBoard(int idBoard) {
         boardRepositories.deleteById(idBoard);
     }
+
+	public List<Board> findUserBoard(int idUser) {
+		return boardRepositories.findByIdUser(idUser);
+	}
 }
 

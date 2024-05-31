@@ -33,6 +33,11 @@ function App(): JSX.Element {
                         <TabBar />
                         <ToDoList />
                     </Route>
+                    <Route path="/Board/:idBoard">
+                        <HeadBar />
+                        <TabBar />
+                        <ToDoList />
+                    </Route>
                     <Route path="/Modele">
                         <HeadBar/>
                         <TabBar />
