@@ -471,15 +471,17 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;  
+  min-height: 100vh;
   padding: 20px;
-  background-color: #f4f4f4;  
+  background-image: url('/Image/LoginPageBackground.jpeg');  
+  background-size: cover;  
+  background-position: center; 
+  background-repeat: no-repeat;  
 }
 
- 
 form {
-  width: 100%;
-  max-width: 360px;  
+  width: 200%;
+  max-width: 400px;  
   background: #fff;
   padding: 20px;
   box-shadow: 0 0 15px rgba(0,0,0,0.2);  
@@ -501,7 +503,6 @@ form {
   border: 1px solid #ccc;  
   border-radius: 4px;  
 }
-
 
  
 .button-group {
