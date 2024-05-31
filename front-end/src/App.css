@@ -463,54 +463,75 @@ html, body {
   margin-left: 10px;  
 }
 
-/* Connexion.tsx */
- 
-.connexion-container {
-  display: flex;
-  height: 100vh; /* Utilise toute la hauteur de la vue */
-  width: 100vw; /* Utilise toute la largeur de la vue */
-  margin: 0; /* Enlève tout margin externe */
-  color: #000000;
-}
 
-.connexion-loginSection, .connexion-signupSection {
-  flex: 1;  
-  display: flex;
-  flex-direction: column;  
-  align-items: center;  
-  justify-content: center;  
-  padding: 20px;  
-  overflow: auto;  
-}
 
-.connexion-loginSection {
-  background-color: #f1efdd;  
-}
-
-.connexion-signupSection {
-  background-color: #f7d2d7;  
-}
-
-.connexion-form {
+/* LoginPage.tsx */
+.login-container {
   display: flex;
   flex-direction: column;
-  max-width: 300px;  
-  width: 100%;  
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-image: url('/Image/LoginPageBackground.jpeg');  
+  background-size: cover;  
+  background-position: center; 
+  background-repeat: no-repeat;  
 }
 
-.connexion-input {
+form {
+  width: 200%;
+  max-width: 400px;  
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);  
+  border-radius: 8px;  
+}
+
+.input-group {
+  margin-bottom: 15px;  
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;  
+}
+
+.input-group input {
+  width: 90%;
+  padding: 8px;
+  border: 1px solid #ccc;  
+  border-radius: 4px;  
+}
+
+ 
+.button-group {
+  display: flex;  
+  justify-content: space-between; 
+}
+ 
+button {
+  flex-grow: 1;  
   padding: 10px;
-  margin: 10px 0;  
-  width: 100%;  
+  border: none;
+  background-color: #8BDCFF;  
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;  
+  margin: 5px;  
 }
 
+button:hover {
+  background-color: #4a54e1;  
+}
 
-.connexion-button {
-  background-color: #74D0F1;  
-  color: white;
-  border: none;
-  cursor: pointer;
-  width: 50%;  
-  margin: 10px auto;  
+ 
+p a {
+  color: #5c67f2;
+  text-decoration: none;
+}
 
+p a:hover {
+  text-decoration: underline;  
 }

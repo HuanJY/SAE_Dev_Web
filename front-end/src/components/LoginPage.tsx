@@ -1,3 +1,5 @@
+import '../App.css';
+
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -82,6 +84,11 @@ function LoginPage() {
     }
   };
 
+  function handleForgotPasswordClick(event: React.MouseEvent) {
+    event.preventDefault();  
+    alert("Haha looser!");
+  }
+
   return (
     <div className="login-container">
       <h2>Connexion / Inscription</h2>
@@ -111,7 +118,7 @@ function LoginPage() {
           <button type="submit" onClick={() => setActionType('register')}>S'inscrire</button>
         </form>
       )}
-      <p><a href="#!">Mot de passe oublié?</a></p>
+      <p><a href="#!" onClick={handleForgotPasswordClick}>Mot de passe oublié?</a></p>
     </div>
   );
 }
