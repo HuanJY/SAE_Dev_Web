@@ -8,9 +8,6 @@ import Board from './BoardPage/Board'
 import Modele from './PageApplication/Modele';
 import Bienvenue from './WelcomePage/Bienvenue';
 import ToDoList from './ToDoList/ToDoList'
-import NavBar from './WelcomePage/NavBar';
-import Connexion from './Connexion/Connexion';
-import { Login } from '@mui/icons-material';
 
 function App(): JSX.Element {
     return (

@@ -70,12 +70,6 @@ const ResponsiveTaskParametre: React.FC<ListParametreProps> = ({
         handleClose();
     };
 
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
-    const handleOpenLabelMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
     const buttonAction: ButtonAction[] = [
         { text: 'Déplacer' },
         { text: 'Supprimer', action: handleDeleteTask},
@@ -151,7 +145,7 @@ const ResponsiveTaskParametre: React.FC<ListParametreProps> = ({
                     </button>
 
 
-                    <button type='button' className='buttonRightTaskParametre buttonForm' onClick={handleOpenLabelMenu}>
+                    <button type='button' className='buttonRightTaskParametre buttonForm'>
                         Etiquettes
                     </button>
 
