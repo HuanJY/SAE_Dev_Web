@@ -114,8 +114,8 @@ function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button type="submit" onClick={() => setActionType('login')}>Se connecter</button>
-          <button type="submit" onClick={() => setActionType('register')}>S'inscrire</button>
+          <button type="submit" className='buttonForm2' onClick={() => setActionType('login')}>Se connecter</button>
+          <button type="submit" className='buttonForm2' onClick={() => setActionType('register')}>S'inscrire</button>
         </form>
       )}
       <p><a href="#!" onClick={handleForgotPasswordClick}>Mot de passe oublié?</a></p>
