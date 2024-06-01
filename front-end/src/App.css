@@ -91,7 +91,6 @@ hr {
   width: 10%;
   height: 100%;
   margin-right: 3%;
-  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -104,6 +103,7 @@ hr {
   width: 20%;
   height: 93%;
   float: left;
+  overflow-y: auto;
   background-color: bisque;
   border-right: solid black;
 }
@@ -112,6 +112,7 @@ hr {
   width: 80%;
   height: 93%;
   float: right;
+  overflow-y: auto;
   background-color: bisque;
 }
 
@@ -446,7 +447,7 @@ html, body {
 .navBar-logo {
   flex-grow: 0; 
   height: 60px;
-  margin-right: auto;  
+  margin-right: auto;
 }
 
 .navBar-logo img {
@@ -510,16 +511,16 @@ form {
   justify-content: space-between; 
 }
  
-button {
-  flex-grow: 1;  
+.buttonForm2 {
+  flex-grow: 1;
   padding: 10px;
   border: none;
-  background-color: #8BDCFF;  
+  background-color: #8BDCFF;
   color: white;
   font-size: 16px;
   cursor: pointer;
-  border-radius: 4px;  
-  margin: 5px;  
+  border-radius: 4px;
+  margin: 5px;
 }
 
 button:hover {
