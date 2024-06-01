@@ -69,19 +69,19 @@ const ResponsiveBoard: React.FC = () => {
     };
 
     return (
-        <div className="right-side" style={{ maxHeight: '900px', overflowY: 'auto' }}>
+        <div className="right-side">
             <h3>Vue d'ensemble</h3>
 
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                 {buttonsTab.map((button, index) => (
-                    <Link key={index} to={button.path} style={{ textDecoration: 'none', width: 'calc(33% - 2% - 1px)', height: '300px', marginRight: index % 3 === 2 ? '0' : '3%', marginBottom: '3%' }}>
+                    <Link key={index} to={button.path} style={{width: 'calc(33% - 2% - 1px)', height: '300px', marginRight: index % 3 === 2 ? '0' : '3%', marginBottom: '3%' }}>
                         <button type='button' className='buttonForm' style={{ width: '100%', height: '100%' }}>
                             <p>{button.text}</p>
                         </button>
                     </Link>
                 ))}
-                <button type='button' className='buttonBoard buttonForm' onClick={handleClickOpen}>
-                    <AddBoxIcon /> <p style={{ marginLeft: '1%' }}>Ajouter un tableau</p>
+                <button type='button' className='buttonBoard buttonForm' onClick={handleClickOpen} >
+                    <AddBoxIcon /> <p style={{marginLeft: '1%' }}>Ajouter un tableau</p>
                 </button>
                 <SetTitleBoard open={open} handleClose={handleClose} handleCancel={handleCancel} error={error} />
             </div>
