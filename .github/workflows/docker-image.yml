@@ -26,19 +26,19 @@ jobs:
     - name: Tag the back-end Docker image
       run: |
         docker tag bafy78/azutrello_back bafy78/azutrello_back:${{ github.event.release.tag_name }}
-        docker tag bafy78/azutrello_back ghcr.io/HuanJY/azutrello_back:${{ github.event.release.tag_name }}
+        docker tag bafy78/azutrello_back ghcr.io/bafy78/azutrello_back:${{ github.event.release.tag_name }}
 
     - name: Tag the front-end Docker image
       run: |
         docker tag bafy78/azutrello_front bafy78/azutrello_front:${{ github.event.release.tag_name }}
-        docker tag bafy78/azutrello_front ghcr.io/HuanJY/azutrello_front:${{ github.event.release.tag_name }}
+        docker tag bafy78/azutrello_front ghcr.io/bafy78/azutrello_front:${{ github.event.release.tag_name }}
 
     - name: Push the back-end Docker image
       run: |
         docker push bafy78/azutrello_back:${{ github.event.release.tag_name }}
-        docker push ghcr.io/HuanJY/azutrello_back:${{ github.event.release.tag_name }}
+        docker push ghcr.io/bafy78/azutrello_back:${{ github.event.release.tag_name }}
 
     - name: Push the front-end Docker image
       run: |
         docker push bafy78/azutrello_front:${{ github.event.release.tag_name }}
-        docker push ghcr.io/HuanJY/azutrello_front:${{ github.event.release.tag_name }}
+        docker push ghcr.io/bafy78/azutrello_front:${{ github.event.release.tag_name }}
