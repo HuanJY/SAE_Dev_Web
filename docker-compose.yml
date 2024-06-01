@@ -1,5 +1,3 @@
-name: azutrello
-
 services:
   db:
     image: mysql
