@@ -13,8 +13,9 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Log in to Docker Hub
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login ghcr.io -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+      run: |
+        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login ghcr.io -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
     - name: Docker Compose
       run: docker-compose build
@@ -26,9 +27,11 @@ jobs:
       run: docker tag bafy78/azutrello_front bafy78/azutrello_front:${{ github.ref }}
 
     - name: Push the back-end Docker image
-      run: docker push bafy78/azutrello_back:${{ github.ref }}
-      run: docker push ghcr.io/bafy78/azutrello_back:${{ github.ref }}
+      run: |
+        docker push bafy78/azutrello_back:${{ github.ref }}
+        docker push ghcr.io/bafy78/azutrello_back:${{ github.ref }}
 
     - name: Push the front-end Docker image
-      run: docker push bafy78/azutrello_front:${{ github.ref }}
-      run: docker push ghcr.io/bafy78/azutrello_front:${{ github.ref }}
+      run: |
+        docker push bafy78/azutrello_front:${{ github.ref }}
+        docker push ghcr.io/bafy78/azutrello_front:${{ github.ref }}
