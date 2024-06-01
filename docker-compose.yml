@@ -32,7 +32,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-        restart: true
 
   frontend:
     image: bafy78/azutrello_front
