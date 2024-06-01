@@ -21,17 +21,17 @@ jobs:
       run: docker-compose build
 
     - name: Tag the back-end Docker image
-      run: docker tag bafy78/azutrello_back bafy78/azutrello_back:${{ github.ref }}
+      run: docker tag bafy78/azutrello_back bafy78/azutrello_back:${{ github.event.release.tag_name }}
 
     - name: Tag the front-end Docker image
-      run: docker tag bafy78/azutrello_front bafy78/azutrello_front:${{ github.ref }}
+      run: docker tag bafy78/azutrello_front bafy78/azutrello_front:${{ github.event.release.tag_name }}
 
     - name: Push the back-end Docker image
       run: |
-        docker push bafy78/azutrello_back:${{ github.ref }}
-        docker push ghcr.io/bafy78/azutrello_back:${{ github.ref }}
+        docker push bafy78/azutrello_back:${{ github.event.release.tag_name }}
+        docker push ghcr.io/bafy78/azutrello_back:${{ github.event.release.tag_name }}
 
     - name: Push the front-end Docker image
       run: |
-        docker push bafy78/azutrello_front:${{ github.ref }}
-        docker push ghcr.io/bafy78/azutrello_front:${{ github.ref }}
+        docker push bafy78/azutrello_front:${{ github.event.release.tag_name }}
+        docker push ghcr.io/bafy78/azutrello_front:${{ github.event.release.tag_name }}
