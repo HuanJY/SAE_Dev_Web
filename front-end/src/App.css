@@ -1,4 +1,4 @@
-    .App {
+.App {
   font-family: monospace;
 }
 
@@ -10,7 +10,7 @@ h3 {
   font-family: monospace;
 }
 
-button {
+.buttonForm {
   background-color: grey;
   color: white;
   border: solid black;
@@ -58,13 +58,6 @@ hr {
   justify-content: center;
 }
 
-/* Class pour le MenuPrincipale */
-
-.buttonBoard {
-  width: calc(33% - 2% - 1px);
-  height: 300px;
-}
-
 /* Forme de la l'application */
 
 .AppForm {
@@ -110,6 +103,7 @@ hr {
   width: 20%;
   height: 93%;
   float: left;
+  overflow-y: auto;
   background-color: bisque;
   border-right: solid black;
 }
@@ -118,6 +112,7 @@ hr {
   width: 80%;
   height: 93%;
   float: right;
+  overflow-y: auto;
   background-color: bisque;
 }
 
@@ -126,7 +121,14 @@ hr {
   padding: 20px;
 }
 
-/* Class pour WorkSpaceDialog */
+/* Class pour le Board */
+
+.buttonBoard {
+  width: calc(33% - 2% - 1px);
+  height: 300px;
+}
+
+/* Class pour le SetTitle Board */
 
 .titleDialogForm {
   width: 20%;
@@ -155,6 +157,7 @@ hr {
   margin-bottom: 4%;
   font-size: large;
 }
+
 /* Class pour Modele */
 
 .outlineModeleType {
@@ -191,7 +194,7 @@ hr {
   border: solid black;
   border-radius: 20px;
   overflow: hidden;
-  margin-right: 20px;
+  margin-right: 20px; 
 }
 
 .headerToDoList ,.footerToDoList{
@@ -348,4 +351,188 @@ hr {
   justify-content: center;
   text-align: center;
   align-items: center;
+}
+
+/* Bienvenue.tsx */
+html, body {
+  overflow-x: hidden; /* Empêche le défilement horizontal */
+}
+
+.bienvenue {
+  text-align: center;
+  width: 100vw; 
+  background-color: #d5f4ff;  
+  color: #000;
+}
+
+
+.mainContent {
+  padding: 50px 20px 0 20px;
+}
+
+.mainContent h1 {
+  margin: 50px 0 10px;
+  font-size: 2.5em;
+}
+
+.mainContent p {
+  font-size: 1.2em;
+  font-weight: lighter;
+  margin-bottom: 10px;
+}
+
+.contentFlex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.infoText {
+  width: 29%;
+  text-align: left;
+  font-size: 1.2em;
+  margin-top: 180px;
+  margin-left: 450px;
+  padding: 5px;
+  border: 1px solid #dd99bb;
+  border-radius: 10px;
+  background-color: #FEF8FC;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.imageContainer {
+  width: 45%;
+}
+
+.imageContainer img {
+  width: 100%;
+  height: auto;
+  margin-left: -650px;
+}
+
+.createAccountButton {
+  margin-top: 50px;
+}
+
+.footerImage img {
+  max-width: 30%;
+  height: auto;
+  margin-top: 60px;
+}
+
+
+/*NavBar.tsx */
+.navBar-container {
+  position: fixed;
+  width: 60%;
+  height: 40px;
+  top: 0;
+  background-color: #74D0F1;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: top 0.3s;  
+  z-index: 1000;  
+}
+
+.navBar-hidden {
+  top: -60px;  
+}
+
+.navBar-logo {
+  flex-grow: 0; 
+  height: 60px;
+  margin-right: auto;
+}
+
+.navBar-logo img {
+  height: 45px;
+  margin-left: 10px;
+}
+
+.navBar-buttons {
+  flex-grow: 0;  
+  padding-right: 20px;  
+}
+
+.navBar-button {
+  margin-left: 10px;  
+}
+
+
+
+/* LoginPage.tsx */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-image: url('/Image/LoginPageBackground.jpeg');  
+  background-size: cover;  
+  background-position: center; 
+  background-repeat: no-repeat;  
+}
+
+form {
+  width: 200%;
+  max-width: 400px;  
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);  
+  border-radius: 8px;  
+}
+
+.input-group {
+  margin-bottom: 15px;  
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;  
+}
+
+.input-group input {
+  width: 90%;
+  padding: 8px;
+  border: 1px solid #ccc;  
+  border-radius: 4px;  
+}
+
+ 
+.button-group {
+  display: flex;  
+  justify-content: space-between; 
+}
+ 
+.buttonForm2 {
+  flex-grow: 1;
+  padding: 10px;
+  border: none;
+  background-color: #8BDCFF;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin: 5px;
+}
+
+button:hover {
+  background-color: #4a54e1;  
+}
+
+ 
+p a {
+  color: #5c67f2;
+  text-decoration: none;
+}
+
+p a:hover {
+  text-decoration: underline;  
 }
