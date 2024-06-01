@@ -1,3 +1,6 @@
+version: "2.27"
+name: azutrello
+
 services:
   db:
     image: mysql
