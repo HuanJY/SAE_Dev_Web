@@ -84,9 +84,6 @@ const ResponsiveMainBar: React.FC = () => {
 
     return (
         <div className="left-side">
-            <div>
-                <h3>Vue d'ensemble</h3>
-
                 <div>
                     {buttonsNav.map((button, index) => (
                         <Link key={index} to={button.path} style={{textDecoration: 'none'}}>
@@ -115,7 +112,6 @@ const ResponsiveMainBar: React.FC = () => {
                     <SetTitleBoard open={open} handleClose={handleClose} handleCancel={handleCancel} error={error}/>
                 </div>
             </div>
-        </div>
     );
 };
 
