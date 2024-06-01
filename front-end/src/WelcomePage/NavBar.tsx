@@ -37,10 +37,10 @@ const NavBar: React.FC = () => {
                 <img src="../Image/AzuLogo.png" alt="Logo" />
             </div>
             <div className="navBar-buttons">
-                <button onClick={handleLoginClick} className="navBar-button">
+                <button onClick={handleLoginClick} className="navBar-button buttonForm2">
                     Se connecter
                 </button>
-                <button onClick={handleSignUpClick} className="navBar-button">
+                <button onClick={handleSignUpClick} className="navBar-button buttonForm2">
                     Créer un compte
                 </button>
             </div>

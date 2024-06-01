@@ -33,7 +33,7 @@ const WelcomePage: React.FC = () => {
           </div>
         </div>
         <Link to = "/Connexion"> 
-         <button className="createAccountButton" onClick={handleCreateAccountClick}>
+         <button className="createAccountButton buttonForm2" onClick={handleCreateAccountClick}>
           Créer un compte
         </button>
         </Link>

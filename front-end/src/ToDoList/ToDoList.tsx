@@ -177,9 +177,20 @@ const ResponsiveTodoList: React.FC = () => {
         }
     };
 
+    const handleTitleChangeList = async (listIndex: number, newTitle: string) => {
+        const listId = lists[listIndex].idList;
+
+        try {
+            await api.post(`/list/${listId}/modifyList`, { listName: newTitle });
+            fetchLists();
+        } catch (error) {
+            console.error('Erreur lors de la modification du titre de la liste :', error);
+        }
+    };
+
     return (
         <div className="right-side" style={{ overflowX: 'auto' }}>
-            <div style={{ display: 'flex', flexWrap: 'nowrap', width: 'max-content' }}>
+            <div style={{ display: 'flex', flexWrap: 'nowrap', width: 'max-content'}}>
                 {lists.map((list, listIndex) => (
                     <div className='toDoListForm' key={list.idList}>
                         <div className='headerToDoList'>
@@ -198,6 +209,8 @@ const ResponsiveTodoList: React.FC = () => {
                                 handleAddTask={() => handleAddTask(listIndex)}
                                 handleDeleteAllTasks={() => handleDeleteAllTasks(listIndex)}
                                 handleDeleteList={() => handleDeleteList(listIndex)}
+                                handleTitleChangeList={(newTitle: string) => handleTitleChangeList(listIndex, newTitle)} // Pass handleTitleChangeList
+                                currentTitle={list.listName} // Pass currentTitle
                             />
                         </div>
     
@@ -226,11 +239,8 @@ const ResponsiveTodoList: React.FC = () => {
                         </div>
     
                         <div className='footerToDoList'>
-                            <button type='button' className='buttonForm' onClick={() => handleAddTask(listIndex)} style={{ width: '83%', marginRight: '2%' }}>
+                            <button type='button' className='buttonForm' onClick={() => handleAddTask(listIndex)} style={{ width: '100%', height:'50px', marginRight: '2%'}}>
                                 <AddIcon /> <p>Ajouter une tâche</p>
-                            </button>
-                            <button type='button' className='iconParametre buttonForm'>
-                                <TuneIcon />
                             </button>
                         </div>
                     </div>

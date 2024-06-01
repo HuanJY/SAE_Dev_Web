@@ -14,7 +14,7 @@ function ResponsiveHeadBar() {
             </div>   
 
             <div className="buttonDeco">
-                <button type='button' style={{background:'none', fontSize:'large', padding:'5%'}} onClick={handleLogout}>
+                <button type='button' style={{border:'none', fontSize:'large', padding:'5%', color:'white', backgroundColor: 'rgb(26, 135, 213)'}} onClick={handleLogout}>
                     Déconnexion
                 </button>
             </div>

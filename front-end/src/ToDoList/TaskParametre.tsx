@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Modal from '@mui/material/Modal';
-import Menu from '@mui/material/Menu';
 
 interface ListParametreProps {
     open: boolean;
@@ -137,7 +136,7 @@ const ResponsiveTaskParametre: React.FC<ListParametreProps> = ({
                     <button type='button' className='buttonApplyTaskParametre buttonForm' onClick={handleApplyChanges} style={{ float: 'right' }}>
                         Appliquer les modifications
                     </button>
-                    
+
 
                 </div>
                 <div className='outlineRightTaskParametre'>
@@ -156,7 +155,7 @@ const ResponsiveTaskParametre: React.FC<ListParametreProps> = ({
                         Etiquettes
                     </button>
 
-                
+
                     <button type='button' className='buttonRightTaskParametre buttonForm'>
                         Checklist
                     </button>
