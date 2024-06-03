@@ -1,37 +1,43 @@
-name: azutrello
-
 on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+  release:
+    branches: [ "main" ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
 
     steps:
     - uses: actions/checkout@v4
 
     - name: Log in to Docker Hub
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
-    - name: Generate timestamp
-      run: echo "TIMESTAMP=$(date +%s)" >> $GITHUB_ENV
+      run: |
+        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+        echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
 
     - name: Docker Compose
       run: docker-compose build
 
-    - name: Tag the front-end Docker image
-      run: docker tag bafy78/azutrello_front bafy78/azutrello_front:${TIMESTAMP}
-
     - name: Tag the back-end Docker image
-      run: docker tag bafy78/azutrello_back bafy78/azutrello_back:${TIMESTAMP}
+      run: |
+        docker tag bafy78/azutrello_back bafy78/azutrello_back:${{ github.event.release.tag_name }}
+        docker tag bafy78/azutrello_back ghcr.io/huanjy/azutrello_back:${{ github.event.release.tag_name }}
+
+    - name: Tag the front-end Docker image
+      run: |
+        docker tag bafy78/azutrello_front bafy78/azutrello_front:${{ github.event.release.tag_name }}
+        docker tag bafy78/azutrello_front ghcr.io/huanjy/azutrello_front:${{ github.event.release.tag_name }}
 
     - name: Push the back-end Docker image
-      run: docker push bafy78/azutrello_back:${TIMESTAMP}
+      run: |
+        docker push bafy78/azutrello_back:${{ github.event.release.tag_name }}
+        docker push ghcr.io/huanjy/azutrello_back:${{ github.event.release.tag_name }}
 
     - name: Push the front-end Docker image
-      run: docker push bafy78/azutrello_front:${TIMESTAMP}
+      run: |
+        docker push bafy78/azutrello_front:${{ github.event.release.tag_name }}
+        docker push ghcr.io/huanjy/azutrello_front:${{ github.event.release.tag_name }}
